@@ -1,12 +1,5 @@
 import random
-import org.gamecontrolplus.gui.*
-import org.gamecontrolplus.*
-import net.java.games.input.*
-
-ControlIO control
-ControlDevice device
-ControlSlider joystick_x
-ControlSlider joystick_y
+# import pydualsense.pydualsense as ds
 
 WINDOW_SIZE = 800
 CIRCLE_QUANTITY = 100
@@ -31,11 +24,9 @@ def setup():
     noFill()
     strokeWeight(STROKE_WEIGHT)
 
-    global control, device, joystick_x, joystick_y
-    control = ControlIO.getInstance(this)
-    device = control.getDevice("Wireless Controller")
-    joystick_x = device.getSlider("x")
-    joystick_y = device.getSlider("y")
+    """dualsense = ds.pydualsense()
+    dualsense.init()
+    dualsense.left_joystick_changed += joystick"""
 
 
 def draw():
@@ -54,7 +45,6 @@ def draw():
         
         popMatrix()
 
-        println(joystick_x.getValue())
 
 
 def keyPressed():
@@ -73,6 +63,6 @@ def keyPressed():
         shape_scale = shape_scale - 0.01
     elif keyCode == 68:
         shape_scale = shape_scale + 0.01
-
-    
     # println(keyCode)
+
+
