@@ -1,10 +1,9 @@
 class Layer:
-    def __init__(self, blend_mode: str) -> None:
+    def __init__(self) -> None:
         self._position_X: int
         self._position_Y: int
         self._scale: float
         self._rotation: float
-        self._blend_mode: str = blend_mode
     
     def get_position_X(self) -> int:
         return self._position_X
@@ -21,9 +20,9 @@ class Layer:
     def get_position(self) -> tuple:
         return (self._position_X, self._position_Y)
     
-    def set_position(self, input_X: int, input_Y: int):
-        self._position_X = input_X
-        self._position_Y = input_Y
+    def set_position(self, input: tuple):
+        self._position_X = input[0]
+        self._position_Y = input[1]
     
     def get_scale(self) -> float:
         return self._scale

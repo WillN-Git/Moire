@@ -73,3 +73,23 @@ class Controls:
     def right_pad_right(self, state: bool):
         if state:
             self._layer2.set_position_X(self._layer2.get_position_X() + 1)
+    
+    """
+    def keyPressed():
+        global offset_x, offset_y, shape_scale
+
+        if keyCode == 38:
+            offset_y = offset_y - 1
+        elif keyCode == 40:
+            offset_y = offset_y + 1
+        elif keyCode == 37:
+            offset_x = offset_x - 1
+        elif keyCode == 39:
+            offset_x = offset_x + 1
+        
+        if keyCode == 83:
+            shape_scale = shape_scale - 0.01
+        elif keyCode == 68:
+            shape_scale = shape_scale + 0.01
+        # println(keyCode)
+    """
