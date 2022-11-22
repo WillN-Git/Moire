@@ -1,7 +1,8 @@
 import random
 import time
 import py5
-import pydualsense as ds
+from controls import *
+from graphics import *
 
 
 def generate_random_color():
@@ -26,15 +27,17 @@ JOYSTICK_SPEED: int = 1
 JOYSTICK_DEAD_ZONE: int = 4
 
 
+layer1: Layer = Layer("BLEND")
+layer2: Layer = Layer("BLEND")
+
+
 random.seed()
 ORIGIN_X: int = random.randint(0, int(WINDOW_SIZE))
 ORIGIN_Y: int = random.randint(0, int(WINDOW_SIZE))
 random.seed()
-layer1_offset_x: int = random.randint(0, int(WINDOW_SIZE / 2))
-layer1_offset_y: int = random.randint(0, int(WINDOW_SIZE / 2))
+layer1.set_position(random.randint(0, int(WINDOW_SIZE / 2)), random.randint(0, int(WINDOW_SIZE / 2)))
 random.seed()
-layer2_offset_x: int = random.randint(0, int(WINDOW_SIZE / 2))
-layer2_offset_y: int = random.randint(0, int(WINDOW_SIZE / 2))
+layer2.set_position(random.randint(0, int(WINDOW_SIZE / 2)), random.randint(0, int(WINDOW_SIZE / 2)))
 
 
 shape_scale = 1.0
@@ -49,26 +52,27 @@ def setup():
     py5.stroke_weight(STROKE_WEIGHT)
     py5.text_size(20)
 
-    dualsense = ds.pydualsense()
-    dualsense.init()
-    dualsense.left_joystick_changed += left_joystick
-    dualsense.right_joystick_changed += right_joystick
-    dualsense.dpad_up += dpad_up
-    dualsense.dpad_down += dpad_down
-    dualsense.dpad_left += dpad_left
-    dualsense.dpad_right += dpad_right
-    dualsense.triangle_pressed += triangle_pressed
-    dualsense.cross_pressed += cross_pressed
-    dualsense.square_pressed += square_pressed
-    dualsense.circle_pressed += circle_pressed
+    controller = Dualsense()
+    controls = Controls(controller, layer1, layer2)
+    
+    controller.instance().left_joystick_changed += controls.left_joystick_moved
+    controller.instance().right_joystick_changed += controls.right_joystick_moved
+    controller.instance().dpad_up += controls.left_pad_up
+    controller.instance().dpad_down += controls.left_pad_down
+    controller.instance().dpad_left += controls.left_pad_left
+    controller.instance().dpad_right += controls.left_pad_right
+    controller.instance().triangle_pressed += controls.right_pad_up
+    controller.instance().cross_pressed += controls.right_pad_down
+    controller.instance().square_pressed += controls.right_pad_left
+    controller.instance().circle_pressed += controls.right_pad_right
 
 
 def draw():
     if (
-        (abs(ORIGIN_X - layer1_offset_x) < 1) and
-        (abs(ORIGIN_Y - layer1_offset_y) < 1) and
-        (abs(ORIGIN_X - layer2_offset_x) < 1) and
-        (abs(ORIGIN_Y - layer2_offset_y) < 1)
+        (abs(ORIGIN_X - layer1.get_position_X()) < 1) and
+        (abs(ORIGIN_Y - layer1.get_position_Y()) < 1) and
+        (abs(ORIGIN_X - layer2.get_position_X()) < 1) and
+        (abs(ORIGIN_Y - layer2.get_position_Y()) < 1)
     ):
         py5.background(255, 255, 255)
     else:
@@ -86,7 +90,7 @@ def draw():
         py5.blend_mode(py5.DIFFERENCE)
         py5.stroke(*LAYER1_STROKE_COLOR)
         for i in range(CIRCLE_QUANTITY):
-            py5.ellipse(layer1_offset_x, layer1_offset_y, WINDOW_SIZE / 40 + i * CIRCLE_SPACING, WINDOW_SIZE / 40 + i * CIRCLE_SPACING)
+            py5.ellipse(layer1.get_position_X(), layer1.get_position_Y(), WINDOW_SIZE / 40 + i * CIRCLE_SPACING, WINDOW_SIZE / 40 + i * CIRCLE_SPACING)
         
         py5.pop_matrix()
 
@@ -94,7 +98,7 @@ def draw():
         py5.push_matrix()
         py5.stroke(*LAYER2_STROKE_COLOR)
         for i in range(CIRCLE_QUANTITY):
-            py5.ellipse(layer2_offset_x, layer2_offset_y, WINDOW_SIZE / 40 + i * CIRCLE_SPACING, WINDOW_SIZE / 40 + i * CIRCLE_SPACING)
+            py5.ellipse(layer2.get_position_X(), layer2.get_position_Y(), WINDOW_SIZE / 40 + i * CIRCLE_SPACING, WINDOW_SIZE / 40 + i * CIRCLE_SPACING)
         
         py5.pop_matrix()
     
@@ -121,78 +125,6 @@ def keyPressed():
         shape_scale = shape_scale + 0.01
     # println(keyCode)
 """
-
-
-def left_joystick(stateX, stateY):
-    # print(f'lj {stateX} {stateY}')
-    if (abs(stateX) > JOYSTICK_DEAD_ZONE) or (abs(stateY) > JOYSTICK_DEAD_ZONE):
-        global layer1_offset_x, layer1_offset_y
-        layer1_offset_x = layer1_offset_x + ((stateX / 50) * JOYSTICK_SPEED)
-        layer1_offset_y = layer1_offset_y + ((stateY / 50) * JOYSTICK_SPEED)
-
-
-def right_joystick(stateX, stateY):
-    # print(f'lj {stateX} {stateY}')
-    if (abs(stateX) > JOYSTICK_DEAD_ZONE) or (abs(stateY) > JOYSTICK_DEAD_ZONE):
-        global layer2_offset_x, layer2_offset_y
-        layer2_offset_x = layer2_offset_x + ((stateX / 50) * JOYSTICK_SPEED)
-        layer2_offset_y = layer2_offset_y + ((stateY / 50) * JOYSTICK_SPEED)
-
-
-def dpad_up(state):
-    if state:
-        global layer1_offset_y
-        layer1_offset_y -= 1
-        # print(f'dpad {state}')
-
-
-def dpad_down(state):
-    if state:
-        global layer1_offset_y
-        layer1_offset_y += 1
-        # print(f'dpad {state}')
-
-
-def dpad_left(state):
-    if state:
-        global layer1_offset_x
-        layer1_offset_x -= 1
-        # print(f'dpad {state}')
-
-
-def dpad_right(state):
-    if state:
-        global layer1_offset_x
-        layer1_offset_x += 1
-        # print(f'dpad {state}')
-
-
-def triangle_pressed(state):
-    if state:
-        global layer2_offset_y
-        layer2_offset_y -= 1
-        # print(f'dpad {state}')
-
-
-def cross_pressed(state):
-    if state:
-        global layer2_offset_y
-        layer2_offset_y += 1
-        # print(f'dpad {state}')
-
-
-def square_pressed(state):
-    if state:
-        global layer2_offset_x
-        layer2_offset_x -= 1
-        # print(f'dpad {state}')
-
-
-def circle_pressed(state):
-    if state:
-        global layer2_offset_x
-        layer2_offset_x += 1
-        # print(f'dpad {state}')
 
 
 py5.run_sketch()
