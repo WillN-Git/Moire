@@ -1,0 +1,18 @@
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 800
+
+
+def setup(): 
+    size(WINDOW_WIDTH, WINDOW_HEIGHT)
+    
+    w = WINDOW_WIDTH * 0.8
+    h = WINDOW_HEIGHT * 0.8
+
+
+
+    translate(w * 0.5, h * 0.5)
+
+    rect(0, 0, w, h)
+    
+def draw():
+    pass
