@@ -1,4 +1,4 @@
-add_library('sound')
+# add_library('oscP5')
 import time, params, utils
 from graphics import *
 from controls import *
