@@ -1,0 +1,308 @@
+##########################################################################################
+                   Game Control Plus  - available devices
+                   --------------------------------------
+  ========================================================================
+  NAME :     Souris
+  Type :     Mouse
+  Port :     Unknown
+    Buttons (8)
+      Type     Name               Multiplier
+      button    Bouton 0            -
+      button    Bouton 1            -
+      button    Bouton 2            -
+      button    Bouton 3            -
+      button    Bouton 4            -
+      button    Bouton 5            -
+      button    Bouton 6            -
+      button    Bouton 7            -
+    Sliders (3)
+      Type     Name               Multiplier     Tolerance
+      slider    Axe X               1.0            0.0            (relative)
+      slider    Axe Y               1.0            0.0            (relative)
+      slider    Molette             1.0            0.0            (relative)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Clavier
+  Type :     Keyboard
+  Port :     Unknown
+    Buttons (126)
+      Type     Name               Multiplier
+      button    ECHAP               -
+      button    1                   -
+      button    2                   -
+      button    3                   -
+      button    4                   -
+      button    5                   -
+      button    6                   -
+      button    7                   -
+      button    8                   -
+      button    9                   -
+      button    0                   -
+      button    )                   -
+      button    =                   -
+      button    RET.ARR             -
+      button    TAB                 -
+      button    A                   -
+      button    Z                   -
+      button    E                   -
+      button    R                   -
+      button    T                   -
+      button    Y                   -
+      button    U                   -
+      button    I                   -
+      button    O                   -
+      button    P                   -
+      button    ACCENT CIRCONFLEXE  -
+      button    $                   -
+      button    ENTREE              -
+      button    CTRL                -
+      button    Q                   -
+      button    S                   -
+      button    D                   -
+      button    F                   -
+      button    G                   -
+      button    H                   -
+      button    J                   -
+      button    K                   -
+      button    L                   -
+      button    M                   -
+      button    ù                   -
+      button                        -
+      button    MAJ                 -
+      button    *                   -
+      button    W                   -
+      button    X                   -
+      button    C                   -
+      button    V                   -
+      button    B                   -
+      button    N                   -
+      button    ,                   -
+      button    ;                   -
+      button    :                   -
+      button    !                   -
+      button    MAJ DROITE          -
+      button    *                   -
+      button    ALT                 -
+      button    ESPACE              -
+      button    VERR.MAJ            -
+      button    F1                  -
+      button    F2                  -
+      button    F3                  -
+      button    F4                  -
+      button    F5                  -
+      button    F6                  -
+      button    F7                  -
+      button    F8                  -
+      button    F9                  -
+      button    F10                 -
+      button    Ver.Num             -
+      button    DEFIL               -
+      button    7 (PAVE NUM.)       -
+      button    8 (PAVE NUM.)       -
+      button    9 (PAVE NUM.)       -
+      button    -                   -
+      button    4 (PAVE NUM.)       -
+      button    5 (PAVE NUM.)       -
+      button    6 (PAVE NUM.)       -
+      button    +                   -
+      button    1 (PAVE NUM.)       -
+      button    2 (PAVE NUM.)       -
+      button    3 (PAVE NUM.)       -
+      button    0 (PAVE NUM.)       -
+      button    . (PAVE NUM.)       -
+      button    <                   -
+      button    F11                 -
+      button    F12                 -
+      button    Piste précédente    -
+      button    Piste suivante      -
+      button    ENTREE (PAVE NUM.)  -
+      button    CTRL DROITE         -
+      button    Muet                -
+      button    Calculatrice        -
+      button    Lecture/Pause       -
+      button    Média - Arrêt       -
+      button    Volume -            -
+      button    Volume +            -
+      button    Web/Démarrage       -
+      button    / (PAVE NUM.)       -
+      button    Impr.Ecran          -
+      button    ALT DROITE          -
+      button    Pause               -
+      button    ORIGINE             -
+      button    HAUT                -
+      button    PG.PREC             -
+      button    GAUCHE              -
+      button    DROITE              -
+      button    FIN                 -
+      button    BAS                 -
+      button    PG.SUIV             -
+      button    INS                 -
+      button    SUPPR               -
+      button    WINDOWS GAUCHE      -
+      button    WINDOWS DROITE      -
+      button    APPLICATION         -
+      button    Marche/Arrêt        -
+      button    Veille              -
+      button    Sortie de veille    -
+      button    Rechercher          -
+      button    Favoris             -
+      button    Actualiser          -
+      button    Web - Arrêt         -
+      button    Suivant             -
+      button    Précédent           -
+      button    Poste de travail    -
+      button    Courrier            -
+      button    Média               -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Unified Virtual HID
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Unified Virtual HID
+  Type :     Unknown
+  Port :     Unknown
+    Buttons (31)
+      Type     Name               Multiplier
+      button    Bouton 0            -
+      button    Contrôle consomma...-
+      button    Pavé numérique      -
+      button    Bouton 3            -
+      button    Bouton 4            -
+      button    Bouton 5            -
+      button    Bouton 6            -
+      button    Bouton 7            -
+      button    Bouton 8            -
+      button    Bouton 9            -
+      button    Bouton 10           -
+      button    Bouton 11           -
+      button    Bouton 12           -
+      button    Bouton 13           -
+      button    Bouton 14           -
+      button    Bouton 15           -
+      button    Bouton 16           -
+      button    Bouton 17           -
+      button    Bouton 18           -
+      button    Bouton 19           -
+      button    Bouton 20           -
+      button    Bouton 21           -
+      button    Bouton 22           -
+      button    Bouton 23           -
+      button    Bouton 24           -
+      button    Bouton 25           -
+      button    Bouton 26           -
+      button    Bouton 27           -
+      button    Bouton 28           -
+      button    Bouton 29           -
+      button    Bouton 30           -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     USB Receiver
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     USB Receiver
+  Type :     Unknown
+  Port :     Unknown
+    Buttons (31)
+      Type     Name               Multiplier
+      button    Contrôle consomma...-
+      button    Pavé numérique      -
+      button    Bouton 2            -
+      button    Bouton 3            -
+      button    Bouton 4            -
+      button    Bouton 5            -
+      button    Bouton 6            -
+      button    Bouton 7            -
+      button    Bouton 8            -
+      button    Bouton 9            -
+      button    Bouton 10           -
+      button    Bouton 11           -
+      button    Bouton 12           -
+      button    Bouton 13           -
+      button    Bouton 14           -
+      button    Bouton 15           -
+      button    Bouton 16           -
+      button    Bouton 17           -
+      button    Bouton 18           -
+      button    Bouton 19           -
+      button    Bouton 20           -
+      button    Bouton 21           -
+      button    Bouton 22           -
+      button    Bouton 23           -
+      button    Bouton 24           -
+      button    Bouton 25           -
+      button    Bouton 26           -
+      button    Bouton 27           -
+      button    Bouton 28           -
+      button    Bouton 29           -
+      button    Bouton 30           -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     USB Receiver
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     USB Receiver
+  Type :     Unknown
+  Port :     Unknown
+    Buttons (3)
+      Type     Name               Multiplier
+      button    Mise en veille sy...-
+      button    Marche/Arrêt système-
+      button    Sortie de veille ...-
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     USB Receiver
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     USB Receiver
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Radio Switch Device
+  Type :     Unknown
+  Port :     Unknown
+    Buttons (1)
+      Type     Name               Multiplier
+      button    Bouton 0            -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Wireless Controller
+  Type :     Stick
+  Port :     Unknown
+    Buttons (16)
+      Type     Name               Multiplier
+      hat       Commande de pouce   1.0            
+      button    Bouton 0            -
+      button    Bouton 1            -
+      button    Bouton 2            -
+      button    Bouton 3            -
+      button    Bouton 4            -
+      button    Bouton 5            -
+      button    Bouton 6            -
+      button    Bouton 7            -
+      button    Bouton 8            -
+      button    Bouton 9            -
+      button    Bouton 10           -
+      button    Bouton 11           -
+      button    Bouton 12           -
+      button    Bouton 13           -
+      button    Bouton 14           -
+    Sliders (6)
+      Type     Name               Multiplier     Tolerance
+      slider    Rotation Y          1.0            0.0            absolute
+      slider    Rotation X          1.0            0.0            absolute
+      slider    Rotation Z          1.0            0.0            absolute
+      slider    Axe Z               1.0            0.0            absolute
+      slider    Axe Y               1.0            0.0            absolute
+      slider    Axe X               1.0            0.0            absolute
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##########################################################################################
+

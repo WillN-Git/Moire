@@ -1,0 +1,17 @@
+##########################################################################################
+                   Game Control Plus  - available devices
+                   --------------------------------------
+  0  Souris     [Mouse]  on  [Unknown]
+  1  Clavier     [Keyboard]  on  [Unknown]
+  2  Unified Virtual HID     [Unknown]  on  [Unknown]
+  3  Unified Virtual HID     [Unknown]  on  [Unknown]
+  4  USB Receiver     [Unknown]  on  [Unknown]
+  5  USB Receiver     [Unknown]  on  [Unknown]
+  6  USB Receiver     [Unknown]  on  [Unknown]
+  7  USB Receiver     [Unknown]  on  [Unknown]
+  8  USB Receiver     [Unknown]  on  [Unknown]
+  9  USB Receiver     [Unknown]  on  [Unknown]
+  10 Radio Switch Device     [Unknown]  on  [Unknown]
+  11 Wireless Controller     [Stick]  on  [Unknown]
+##########################################################################################
+
