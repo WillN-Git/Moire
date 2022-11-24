@@ -17,8 +17,11 @@ int windowSizeX = 600;
 int windowSizeY = 600;
 int originX = (int)(Math.random() * windowSizeX);
 int originY = (int)(Math.random() * windowSizeY);
-int layer1PosX = (int)(Math.random() * (windowSizeX / 2));
-int layer1PosY = (int)(Math.random() * (windowSizeY / 2));
+Layer layer1 = new Layer();
+// Layer layer2 = new Layer();
+layer1.getPositionX();
+// int layer1PosX = (int)(Math.random() * (windowSizeX / 2));
+// int layer1PosY = (int)(Math.random() * (windowSizeY / 2));
 float layer1DistanceToOrigin;
 int layer2PosX = (int)(Math.random() * (windowSizeX / 2));
 int layer2PosY = (int)(Math.random() * (windowSizeY / 2));
@@ -29,6 +32,7 @@ float layer2DistanceToOrigin;
 SinOsc[] sineWaves;
 int numSines = 2;
 float[] sineVolume;
+
 
 
 void setup() {
@@ -85,11 +89,11 @@ void draw() {
         popMatrix();
         
         // SOUND
-
         layer1DistanceToOrigin = sqrt((int)(Math.pow(abs(originX - layer1PosX), 2)) + (int)(Math.pow(abs(originY - layer1PosY), 2)));
         layer2DistanceToOrigin = sqrt((int)(Math.pow(abs(originX - layer2PosX), 2)) + (int)(Math.pow(abs(originY - layer2PosY), 2)));
-        float frequency = pow(1000, map(layer1DistanceToOrigin, 0, 848, 0, 1)) + 150;
-        float detune = map(layer2DistanceToOrigin, 0, 848, -0.5, 0.5);
+        // float frequency = pow(700, map(layer1DistanceToOrigin, 0, 848, 0, 1)) + 300;
+        float frequency = 200;
+        float detune = map(layer1DistanceToOrigin + layer2DistanceToOrigin, 0, 1500, 0.5, 10);
         println("layer1DistanceToOrigin : " + layer1DistanceToOrigin);
         println("layer2DistanceToOrigin : " + layer2DistanceToOrigin);
         println("frequency : " + frequency);
