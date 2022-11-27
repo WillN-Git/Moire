@@ -1,12 +1,13 @@
+
+
 """
     Responsible to render the Logo
 """
 class Logo:
-    def __init__(self, cx, cy, radius):
-        self.cx = cx
-        self.cy = cy
-        self.radius = radius
-        self.num_slices = 80 
+    cx = width * 0.5
+    cy = height * 0.5
+    radius = width * 0.1
+    num_slices = 80 
 
     def set_num_slices(self, n):
         self.num_slices = n
@@ -14,6 +15,7 @@ class Logo:
     def set_num_slices(self, r):
         self.radius = r
 
+    @classmethod
     def draw():
         # self.cx = width * 0.5
         # self.cy = height * 0.5

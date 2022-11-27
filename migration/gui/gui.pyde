@@ -1,4 +1,5 @@
 from math import pi, cos, sin
+from logo import Logo
 
 width = 800
 height = 800
