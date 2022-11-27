@@ -14,8 +14,9 @@ void setup() {
 }
 
 void draw() {
-    mouseTracker = new MouseTracker();
-    mouseTracker.draw();
+    Cover cover = new Cover();
+    cover.draw();
 
-    canvas.draw();
+    // MouseTracker m = new MouseTracker();
+    // m.draw();
 }

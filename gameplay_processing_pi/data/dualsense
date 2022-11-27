@@ -1,7 +1,0 @@
-Dualsense controller
-left_joy_X	Left joystick X axis	3	SLIDER	Axe X	0	1.0	0.0
-left_joy_Y	Left joystick Y axis	3	SLIDER	Axe Y	0	1.0	0.0
-left_joy_pressed	Left joystick pressed	1	BUTTON	Bouton 10	0	0.0	0.0
-right_joy_X	Right joystick X axis	3	SLIDER	Axe Z	0	1.0	0.0
-right_joy_Y	Right joystick Y axis	3	SLIDER	Rotation Z	0	1.0	0.0
-right_joy_pressed	Right joystick pressed	1	BUTTON	Bouton 11	0	0.0	0.0
