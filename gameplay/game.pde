@@ -1,16 +1,24 @@
 class Game {
+    ControlDevice controller;
+    LevelsParams levelsParams;
+    Map[] levelsParamsList;
     int levelQuantity;
     int currentLevel;
     Level[] levels;
     boolean isFinished;
 
-    Game(int levelQuantity) {
-        this.levelQuantity = levelQuantity;
+    Game(ControlDevice controller) {
+        this.controller = controller;
+        this.levelsParams = new LevelsParams();
+        this.levelsParamsList = levelsParams.getParamsList();
+        this.levelQuantity = levelsParams.getLevelQuantity();
         this.currentLevel = 1;
         this.levels = new Level[levelQuantity];
         this.isFinished = false;
+        populateLevels();
     }
 
+    
     int getLevelQuantity() {
         return levelQuantity;
     }
@@ -23,8 +31,11 @@ class Game {
         this.currentLevel += 1;
     }
 
-    void setLevels(Level[] input) {
-        this.levels = input;
+    
+    void populateLevels() {
+        for (int i = 0; i < levelQuantity; i++) {
+            this.levels[i] = new Level(levelsParamsList[i], controller);
+        }
     }
 
     Level[] getLevels() {
@@ -42,20 +53,32 @@ class Game {
 
 
 class Params {
-    float joystickSpeed;
     float joystickDeadZone;
+    float layerTranslationSpeed;
+    float layerScaleSpeed;
+    float triggerSpeed;
 
     Params() {
-        this.joystickSpeed = 7.0;
         this.joystickDeadZone = 0.05;
-    }
-
-    float getJoystickSpeed() {
-        return joystickSpeed;
+        this.layerTranslationSpeed = 7.0;
+        this.layerScaleSpeed = 0.5;
+        this.triggerSpeed = 2.0;
     }
 
     float getJoystickDeadZone() {
         return joystickDeadZone;
+    }
+
+    float getLayerTranslationSpeed() {
+        return layerTranslationSpeed;
+    }
+
+    float getLayerScaleSpeed() {
+        return layerScaleSpeed;
+    }
+
+    float getTriggerSpeed() {
+        return triggerSpeed;
     }
 }
 
@@ -64,36 +87,44 @@ class Level {
     int levelID;
     int layerQuantity;
     Layer[] layers;
-    float totalDistanceToOrigin;
+    String shapeType;
     int shapeQuantity;
     int shapeSpacing;
     int strokeWeight;
     boolean hasColor;
+    float totalDistanceToOrigin;
     int circleButtonPressedCount;
     int layerToControl;
+    boolean rotationControlEnabled;
+    float sumOfLayersRotations;
+    boolean scaleControlEnabled;
+    float sumOfLayersScalesDifferences;
     boolean hasBeenSetUp;
     boolean isComplete;
     Layer background;
     ControlDevice controller;
 
-    Level(int levelID, int layerQuantity, ControlDevice controller) {
-        this.levelID = levelID;
-        this.layerQuantity = layerQuantity;
+    Level(Map levelParams, ControlDevice controller) {
+        this.levelID = (int)levelParams.get("ID");
+        this.layerQuantity = (int)levelParams.get("layerQuantity");
         this.layers = new Layer[layerQuantity];
+        this.shapeType = levelParams.get("shapeType").toString();
         this.shapeQuantity = 100;
         this.shapeSpacing = 20;
         this.strokeWeight = 4;
-        this.hasColor = true;
+        this.hasColor = (boolean)levelParams.get("hasColor");
         this.circleButtonPressedCount = 0;
         this.layerToControl = 1;
+        this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
+        this.scaleControlEnabled = (boolean)levelParams.get("scaleControlEnabled");
         this.hasBeenSetUp = false;
         this.isComplete = false;
         this.background = new Layer();
         this.controller = controller;
-        instanciateLayers(layerQuantity);
+        instanciateLayers();
     }
 
-    void instanciateLayers(int layerQuantity) {
+    void instanciateLayers() {
         for (int i = 0; i < layerQuantity; i++) {
             this.layers[i] = new Layer();
         }
@@ -106,6 +137,9 @@ class Level {
     void circleButtonPressed() {
         this.circleButtonPressedCount += 1;
         updateLayerToControl();
+        if (hasColor && layerQuantity > 1) {
+            this.layers[getLayerToControl() - 1].setStrokeColor(utils.generateRandomColor());
+        }
     }
 
     int getLayerToControl() {
@@ -116,27 +150,83 @@ class Level {
         this.layerToControl = (circleButtonPressedCount % layerQuantity) + 1;
     }
 
+    boolean isRotationControlEnabled() {
+        return rotationControlEnabled;
+    }
+
+    boolean isScaleControlEnabled() {
+        return scaleControlEnabled;
+    }
+
     boolean hasBeenSetUp() {
         return hasBeenSetUp;
     }
 
     void setupLevel() {
+        println("--------");
+        println("LEVEL", game.getCurrentLevel());
         strokeWeight(strokeWeight);
         background.setStrokeColor(color(0, 0, 0));
+
+        // STATIC BACKGROUND LAYER
         int[] coordBackground = utils.generateRandomCoord(0, width, 0, height);
         background.setPosition(coordBackground[0], coordBackground[1]);
 
+        if (rotationControlEnabled) {
+            switch (shapeType) {
+                case "square":
+                    background.setRotation(utils.generateRandomRot() % 90);
+            }
+        }
+
+        if (scaleControlEnabled) {
+            background.setScale(utils.generateRandomScale());
+        }
+
+        // DYNAMIC LAYERS
         for (int i = 0; i < layerQuantity; i++) {
-            layers[i].setStrokeColor(utils.generateRandomColor());
             int[] coordLayer = utils.generateRandomCoord(0, width / 2, 0, height / 2);
             layers[i].setPosition(coordLayer[0], coordLayer[1]);
+
+            if (hasColor) {
+                layers[i].setStrokeColor(utils.generateRandomColor());
+            }
+            else {
+                layers[i].setStrokeColor(color(0, 0, 0));
+            }
+
+            if (rotationControlEnabled) {
+                switch (shapeType) {
+                    case "square":
+                        layers[i].setRotation(utils.generateRandomRot() % 90);
+                }
+            }
+
+            if (scaleControlEnabled) {
+                layers[i].setScale(utils.generateRandomScale());
+            }
         }
 
         this.hasBeenSetUp = true;
     }
 
+    boolean checkIfComplete() {
+        if ((totalDistanceToOrigin < layerQuantity) &&
+            (sumOfLayersRotations < layerQuantity) &&
+            (sumOfLayersScalesDifferences < ((float)layerQuantity / 10))
+        ) {
+            println("Level", game.getCurrentLevel(), "finished", frameCount);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     void drawLevel() {
         this.totalDistanceToOrigin = 0;
+        this.sumOfLayersRotations = 0;
+        this.sumOfLayersScalesDifferences = 0;
 
         for (int layer = 0; layer < layerQuantity; layer++) {
             if (layerToControl == layer + 1) {
@@ -144,38 +234,64 @@ class Level {
             }
             layers[layer].computeDistanceToOrigin(background.getPositionX(), background.getPositionY());
             this.totalDistanceToOrigin += layers[layer].getDistanceToOrigin();
+
+            layers[layer].computeRotationToBackground(background.getRotation());
+            switch (shapeType) {
+                case "square":
+                    this.sumOfLayersRotations += (layers[layer].getRotationToBackground() % 90);
+            }
+
+            layers[layer].computeScaleToBackground(background.getScale());
+            this.sumOfLayersScalesDifferences += (layers[layer].getScaleToBackground());
         }
 
-        if (totalDistanceToOrigin < layerQuantity) {
-            this.isComplete = true;
-        }
+        this.isComplete = checkIfComplete();
 
         background(100, 100, 100);
+        rectMode(CENTER);
 
         // STATIC BACKGROUND LAYER
+        pushMatrix();
         blendMode(BLEND);
         stroke(background.getStrokeColor());
+        translate(background.getPositionX(), background.getPositionY());
+        rotate(radians(background.getRotation()));
+        scale(background.getScale());
         for (int i = 0; i < shapeQuantity; i++) {
-            ellipse(
-                background.getPositionX(),
-                background.getPositionY(),
-                (width / 40) + (i * shapeSpacing),
-                (height / 40) + (i * shapeSpacing)
-            );
+            switch(shapeType) {
+                case "circle":
+                    ellipse(0, 0, (width / 40) + (i * shapeSpacing), (height / 40) + (i * shapeSpacing));
+                    break;
+                case "square":
+                    square(0, 0, (width / 40) + (i * shapeSpacing));
+                    break;
+            }
+        }
+        popMatrix();
+
+        // DYNAMIC LAYERS
+        if (hasColor) {
+            blendMode(DIFFERENCE);
+        }
+        else {
+            blendMode(BLEND);
         }
 
-        // REMOTED MOVING LAYERS
         for (int i = 0; i < layerQuantity; i++) {
             pushMatrix();
-            blendMode(DIFFERENCE);
             stroke(layers[i].getStrokeColor());
+            translate(layers[i].getPositionX(), layers[i].getPositionY());
+            rotate(radians(layers[i].getRotation()));
+            scale(layers[i].getScale());
             for (int j = 0; j < shapeQuantity; j++) {
-                ellipse(
-                    layers[i].getPositionX(),
-                    layers[i].getPositionY(),
-                    (width / 40) + (j * shapeSpacing),
-                    (height / 40) + (j * shapeSpacing)
-                );
+                switch(shapeType) {
+                case "circle":
+                    ellipse(0, 0, (width / 40) + (j * shapeSpacing), (height / 40) + (j * shapeSpacing));
+                    break;
+                case "square":
+                    square(0, 0, (width / 40) + (j * shapeSpacing));
+                    break;
+                }   
             }
             popMatrix();
         }

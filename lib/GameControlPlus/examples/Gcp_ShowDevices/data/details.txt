@@ -155,6 +155,37 @@
       button    Média               -
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ========================================================================
+  NAME :     Wireless Controller
+  Type :     Stick
+  Port :     Unknown
+    Buttons (16)
+      Type     Name               Multiplier
+      hat       Commande de pouce   1.0            
+      button    Bouton 0            -
+      button    Bouton 1            -
+      button    Bouton 2            -
+      button    Bouton 3            -
+      button    Bouton 4            -
+      button    Bouton 5            -
+      button    Bouton 6            -
+      button    Bouton 7            -
+      button    Bouton 8            -
+      button    Bouton 9            -
+      button    Bouton 10           -
+      button    Bouton 11           -
+      button    Bouton 12           -
+      button    Bouton 13           -
+      button    Bouton 14           -
+    Sliders (6)
+      Type     Name               Multiplier     Tolerance
+      slider    Rotation Y          1.0            0.0            absolute
+      slider    Rotation X          1.0            0.0            absolute
+      slider    Rotation Z          1.0            0.0            absolute
+      slider    Axe Z               1.0            0.0            absolute
+      slider    Axe Y               1.0            0.0            absolute
+      slider    Axe X               1.0            0.0            absolute
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
   NAME :     Unified Virtual HID
   Type :     Unknown
   Port :     Unknown
@@ -272,37 +303,6 @@
     Buttons (1)
       Type     Name               Multiplier
       button    Bouton 0            -
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ========================================================================
-  NAME :     Wireless Controller
-  Type :     Stick
-  Port :     Unknown
-    Buttons (16)
-      Type     Name               Multiplier
-      hat       Commande de pouce   1.0            
-      button    Bouton 0            -
-      button    Bouton 1            -
-      button    Bouton 2            -
-      button    Bouton 3            -
-      button    Bouton 4            -
-      button    Bouton 5            -
-      button    Bouton 6            -
-      button    Bouton 7            -
-      button    Bouton 8            -
-      button    Bouton 9            -
-      button    Bouton 10           -
-      button    Bouton 11           -
-      button    Bouton 12           -
-      button    Bouton 13           -
-      button    Bouton 14           -
-    Sliders (6)
-      Type     Name               Multiplier     Tolerance
-      slider    Rotation Y          1.0            0.0            absolute
-      slider    Rotation X          1.0            0.0            absolute
-      slider    Rotation Z          1.0            0.0            absolute
-      slider    Axe Z               1.0            0.0            absolute
-      slider    Axe Y               1.0            0.0            absolute
-      slider    Axe X               1.0            0.0            absolute
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##########################################################################################
 

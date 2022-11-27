@@ -42,7 +42,7 @@ void setup() {
     }
     
     // Setup a function to trap events for this button
-    controller.getButton("cross").plug(this, "crossPressed", ControlIO.ON_RELEASE);
+    controller.getButton("circle").plug(this, "circlePressed", ControlIO.ON_RELEASE);
 
     // SOUND SETUP
     sineWaves = new SinOsc[numSines];
@@ -58,19 +58,11 @@ void setup() {
     }
 
     // GAME INSTANCES
-    game = new Game(2); // parameter = quantity of levels in the game
-    levels = new Level[game.getLevelQuantity()];
-
-    for (int i = 0; i < game.getLevelQuantity(); i++) {
-        levels[i] = new Level(i + 1, i + 1, controller);
-    }
-
-    game.setLevels(levels);
+    game = new Game(controller);
 }
 
 
 void draw() {
-
     if (! game.getLevels()[game.getCurrentLevel() - 1].hasBeenSetUp()) {
         game.getLevels()[game.getCurrentLevel() - 1].setupLevel();
     }
@@ -102,8 +94,8 @@ void draw() {
 }
 
 
-void crossPressed() {
-    levels[game.getCurrentLevel() - 1].circleButtonPressed();
+void circlePressed() {
+    game.getLevels()[game.getCurrentLevel() - 1].circleButtonPressed();
 }
 
 
@@ -119,7 +111,7 @@ void levelComplete() {
     if (game.isFinished()) {
         background(0, 0, 0);
         text("THANKS FOR PLAYING", width / 2, height / 2);
-        delay(10000);
+        delay(5000);
         System.exit(-1); // End the program
     }
     else {
