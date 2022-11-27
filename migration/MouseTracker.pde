@@ -21,8 +21,8 @@ class MouseTracker {
 
                 size = dist(mouseX, mouseY, i, j);
                 size = size / maxDistance * ellipseSize;
+                noStroke();
                 ellipse(i, j, size, size);
-                //noStroke();
 
             }
         }

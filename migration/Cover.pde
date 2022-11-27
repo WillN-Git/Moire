@@ -22,11 +22,11 @@ public class Cover {
 
     public Cover() {
         n = (mouseY * 10.0) / width;
-        w = 16.0;         
-        h = 16.0;         
-        dx = w / width;    
-        dy = h / height;   
-        x = -w/2;          
+        w = 16.0;      
+        h = 16.0;
+        dx = w / width;
+        dy = h / height;
+        x = -w/2;   
     }
 
 
@@ -40,9 +40,10 @@ public class Cover {
         loadPixels();
 
         float r, theta, val;
+        float y;
 
         for (int i = 0; i < width; i++) {
-                float y = -h/2;        // Start y at -1 * height / 2
+                y = -h/2;
                 for (int j = 0; j < height; j++) {
                 r = sqrt((x*x) + (y*y));    // Convert cartesian to polar
                 theta = atan2(y,x);         // Convert cartesian to polar
@@ -51,7 +52,7 @@ public class Cover {
                 val = sin(n*cos(r) + 5 * theta);           // Results in a value between -1 and 1
                 
                 // Map resulting vale to grayscale value
-                pixels[i+j*width] = color((val + 1.0) * 255.0/2.0);     // Scale to between 0 and 255
+                pixels[ i + j * width ] = color((val + 1.0) * 255.0/2.0);     // Scale to between 0 and 255
                 y += dy; // Increment y
             }
             x += dx; // Increment x
