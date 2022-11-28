@@ -6,15 +6,17 @@ class Game {
     int currentLevel;
     Level[] levels;
     boolean isFinished;
+    // PApplet parentPApplet;
 
     Game(ControlDevice controller) {
         this.controller = controller;
         this.levelsParams = new LevelsParams();
         this.levelsParamsList = levelsParams.getParamsList();
         this.levelQuantity = levelsParams.getLevelQuantity();
-        this.currentLevel = 1;
+        this.currentLevel = 8;
         this.levels = new Level[levelQuantity];
         this.isFinished = false;
+        // this.parentPApplet = parentPApplet;
         populateLevels();
     }
 
@@ -109,9 +111,9 @@ class Level {
         this.layerQuantity = (int)levelParams.get("layerQuantity");
         this.layers = new Layer[layerQuantity];
         this.shapeType = levelParams.get("shapeType").toString();
-        this.shapeQuantity = 100;
-        this.shapeSpacing = 20;
-        this.strokeWeight = 4;
+        this.shapeQuantity = 200;
+        this.shapeSpacing = 40;
+        this.strokeWeight = 8;
         this.hasColor = (boolean)levelParams.get("hasColor");
         this.circleButtonPressedCount = 0;
         this.layerToControl = 1;
@@ -207,6 +209,22 @@ class Level {
             }
         }
 
+        /*
+        // SOUND SETUP
+        sineWaves = new SinOsc[numSines];
+        sineVolume = new float[numSines];
+        for (int i = 0; i < numSines; i++) {
+            // The overall amplitude shouldn't exceed 1.0 which is prevented by 1.0/numSines.
+            // The ascending waves will get lower in volume the higher the frequency.
+            sineVolume[i] = volume / (i + 1);
+
+            // Create the Sine Oscillators and start them
+            sineWaves[i] = new SinOsc(this);
+            //sineWaves[i].play();
+            
+        }
+        */
+
         this.hasBeenSetUp = true;
     }
 
@@ -295,5 +313,19 @@ class Level {
             }
             popMatrix();
         }
+
+        
+        /*// SOUND
+        float frequency = pow(700, map(totalDistanceToOrigin, 0, 848, 0, 1)) + 300;
+        // float frequency = 200;
+        float detune = map(totalDistanceToOrigin, 0, 1500, 0.5, 10);
+        
+
+        // Set the frequencies, detuning and volume
+        for (int i = 0; i < numSines; i++) { 
+            sineWaves[i].freq(frequency * (i + 1 + i * detune));
+            sineWaves[i].amp(sineVolume[i]);
+        }
+        */
     }
 }
