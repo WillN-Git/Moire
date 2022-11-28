@@ -18,6 +18,7 @@ class Level {
     boolean isComplete;
     Layer background;
     ControlDevice controller;
+    Polygon polygon;
 
     Level(Map levelParams, ControlDevice controller) {
         this.levelID = (int)levelParams.get("ID");
@@ -37,6 +38,7 @@ class Level {
         this.background = new Layer();
         this.controller = controller;
         instanciateLayers();
+        this.polygon = new Polygon();
     }
 
     void instanciateLayers() {
@@ -192,23 +194,27 @@ class Level {
             blendMode(BLEND);
         }
 
-        for (int i = 0; i < layerQuantity; i++) {
-            pushMatrix();
-            stroke(layers[i].getStrokeColor());
-            translate(layers[i].getPositionX(), layers[i].getPositionY());
-            rotate(radians(layers[i].getRotation()));
-            scale(layers[i].getScale());
-            for (int j = 0; j < shapeQuantity; j++) {
-                switch(shapeType) {
-                    case "circle":
-                        ellipse(0, 0, (width / 40) + (j * shapeSpacing), (height / 40) + (j * shapeSpacing));
-                        break;
-                    case "square":
-                        square(0, 0, (width / 40) + (j * shapeSpacing));
-                        break;
-                }   
-            }
-            popMatrix();
+        // for (int i = 0; i < layerQuantity; i++) {
+        //     pushMatrix();
+        //     stroke(layers[i].getStrokeColor());
+        //     translate(layers[i].getPositionX(), layers[i].getPositionY());
+        //     rotate(radians(layers[i].getRotation()));
+        //     scale(layers[i].getScale());
+        //     for (int j = 0; j < shapeQuantity; j++) {
+        //         switch(shapeType) {
+        //             case "circle":
+        //                 ellipse(0, 0, (width / 40) + (j * shapeSpacing), (height / 40) + (j * shapeSpacing));
+        //                 break;
+        //             case "square":
+        //                 square(0, 0, (width / 40) + (j * shapeSpacing));
+        //                 break;
+        //         }   
+        //     }
+        //     popMatrix();
+        // }
+
+        for(int i=0; i < layerQuantity; i++) {
+            polygon.draw();
         }
     }
 }
