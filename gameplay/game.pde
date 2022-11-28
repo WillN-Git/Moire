@@ -13,7 +13,7 @@ class Game {
         this.levelsParams = new LevelsParams();
         this.levelsParamsList = levelsParams.getParamsList();
         this.levelQuantity = levelsParams.getLevelQuantity();
-        this.currentLevel = 8;
+        this.currentLevel = 1;
         this.levels = new Level[levelQuantity];
         this.isFinished = false;
         this.parentPApplet = parentPApplet;

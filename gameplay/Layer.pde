@@ -8,14 +8,22 @@ class Layer {
     float scale;
     float scaleToBackground; // in percentage of difference
     boolean scaleClapPlayed;
+    boolean hasColor;
     color strokeColor;
+    // int shapeSides;
+    int shapeQuantity;
+    int shapeSpacing;
     Params params;
 
-    Layer() {
+    Layer(Map levelParams) {
         this.params = new Params();
         this.rotationClapPlayed = false;
         this.scale = 1;
         this.scaleClapPlayed = false;
+        this.hasColor = hasColor;
+        //this.shapeSides = shapeSides;
+        this.shapeQuantity = shapeQuantity;
+        this.shapeSpacing = shapeSpacing;
     }
 
     float getPositionX() {
@@ -44,8 +52,8 @@ class Layer {
     }
 
     void computeDistanceToOrigin(float originX, float originY) {
-        this.distanceToOrigin = sqrt(sq(abs(originX - getPositionX())) + sq(abs(originY - getPositionY())));
-    }
+        this.distanceToOrigin = dist(originX, originY, getPositionX(), getPositionY());
+    } 
 
     float getRotation() {
         return rotation;
