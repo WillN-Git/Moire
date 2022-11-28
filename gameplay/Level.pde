@@ -18,6 +18,14 @@ class Level {
     SinOsc[] sineWaves;
     float[] sineVolume;
 
+    // BEADS
+    WavePlayer lfoFreq;
+    WavePlayer lfoAmp;
+    Function function;
+    WavePlayer distanceSoundWave;
+    Gain distanceSoundGain;
+    // Gain ambiantGain;
+
 
     Level(Map levelParams, ControlDevice controller, PApplet parentPApplet) {
         this.levelParams = levelParams;
@@ -42,6 +50,30 @@ class Level {
         for (int i = 0; i <= layerQuantity; i++) {
             this.layers[i] = new Polygon(levelParams);
         }
+    }
+
+    void initBeads() {
+        ac = AudioContext.getDefaultContext();
+        this.lfoFreq = new WavePlayer(1, Buffer.SINE);
+        this.lfoAmp = new WavePlayer(0.1, Buffer.SINE);
+        this.function = new Function(lfoFreq) {
+            float calculate() {
+                return x[0] * 50.0 + 200.0;
+            }
+        };
+
+        this.distanceSoundWave = new WavePlayer(function, Buffer.SINE);
+        this.distanceSoundGain = new Gain(1, this.lfoAmp);
+        // this.ambiantGain = new Gain(1, 0.5);
+
+        this.distanceSoundGain.addInput(this.distanceSoundWave);
+        // this.distanceSoundGain.addInput(game.rotationClapPlayer);
+        // this.ambiantGain.addInput(game.ambiantSoundPlayer);
+
+        ac.out.addInput(this.distanceSoundGain);
+        // ac.out.addInput(this.ambiantGain);
+
+        ac.start();
     }
 
     boolean isComplete() {
@@ -81,23 +113,26 @@ class Level {
             layers[i].init(this.hasColor);
         }
 
-        // SOUND SETUP
-        // int numSines = 2;
-        // float volume = (1.0 / numSines);
-        // SinOsc[] sineWaves = new SinOsc[numSines];
-        // float[] sineVolume = new float[numSines];
-        //SinOsc lfo = new SinOsc();
-        for (int i = 0; i < this.numSines; i++) {
-            // The overall amplitude shouldn't exceed 1.0 which is prevented by 1.0/numSines.
-            // The ascending waves will get lower in volume the higher the frequency.
-            this.sineVolume[i] = this.volume / (i + 1);
+        // // SOUND SETUP
+        // // int numSines = 2;
+        // // float volume = (1.0 / numSines);
+        // // SinOsc[] sineWaves = new SinOsc[numSines];
+        // // float[] sineVolume = new float[numSines];
+        // //SinOsc lfoFreq = new SinOsc();
+        // for (int i = 0; i < this.numSines; i++) {
+        //     // The overall amplitude shouldn't exceed 1.0 which is prevented by 1.0/numSines.
+        //     // The ascending waves will get lower in volume the higher the frequency.
+        //     this.sineVolume[i] = this.volume / (i + 1);
 
-            // Create the Sine Oscillators and start them
-            this.sineWaves[i] = new SinOsc(this.parentPApplet);
-            //this.sineWaves[i].play();
-        }
+        //     // Create the Sine Oscillators and start them
+        //     this.sineWaves[i] = new SinOsc(this.parentPApplet);
+        //     //this.sineWaves[i].play();
+        // }
 
         ambiantSound.loop();
+
+        // TESTS BEADS
+        initBeads();
 
         this.hasBeenSetUp = true;
     }
@@ -107,7 +142,6 @@ class Level {
             (sumOfLayersRotations < layerQuantity) &&
             (sumOfLayersScalesDifferences < ((float)layerQuantity / 10))
         ) {
-            println("Level", game.getCurrentLevel(), "finished", frameCount);
             return true;
         }
         else {
@@ -150,6 +184,9 @@ class Level {
             // ROTATION CLAP SOUND
             if ((layers[i].getRotationToBackground() < 1) && (! layers[i].rotationClapPlayed)) {
                 rotationClap.play();
+                // game.rotationClapPlayer.reset();
+                // game.rotationClapPlayer.start(0);
+                // this.g.addInput(game.rotationClapPlayer);
                 layers[i].rotationClapPlayed = true;
             }
             if (layers[i].getRotationToBackground() > 1) {
@@ -172,23 +209,22 @@ class Level {
         }
 
         // CONTINUOUS SOUND RELATED TO SHAPES DISTANCES TO ORIGIN
-        float frequency = pow(300, map(this.totalDistanceToOrigin, 0, 848, 0, 1)) + 150;
-        // float frequency = 200;
-        float detune = map(this.totalDistanceToOrigin, 0, 1500, 0.5, 10);
-        
+        // BEADS LIBRARY
+        this.lfoFreq.setFrequency(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.05, 3));
+        this.lfoAmp.setFrequency(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.06, 3));
 
-        // Set the frequencies, detuning and volume
-        for (int i = 0; i < this.numSines; i++) { 
-            // this.sineWaves[i].freq(frequency * (i + 1 + i * detune));
-            // sineWaves[i].amp(sineVolume[i]);
-            // this.sineWaves[i].amp(cos(second()));
-            //this.sineWaves[i].freq(frequency * cos(millis()) + 0.5);
-        }
 
         this.isComplete = checkIfComplete();
     }
 
     void levelComplete() {
         ambiantSound.stop();
+        background(0, 0, 0);
+        text("LEVEL COMPLETE", width / 2, height / 2);
+        println("Level", game.getCurrentLevel(), "complete");
+
+        // BEADS
+        ac.stop();
+        ac.out.clearInputConnections();
     }
 }

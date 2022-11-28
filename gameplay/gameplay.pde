@@ -12,22 +12,20 @@ SoundFile scaleClap;
 SoundFile selectionClap;
 SoundFile ambiantSound;
 
+// TEST AUDIO LIBRARY BEADS
+import beads.*;
+import java.util.Arrays; 
+AudioContext ac;
+// String rotationClapPath;
+
 // GRAPHICS RELATED VARIABLES
 int fpsFontSize = 20;
 
 // GAME INSTANCES
 Game game;
-Level[] levels;
 
 // CONTROLLER
 ControlDevice controller;
-
-// SOUND
-// SinOsc[] sineWaves;
-// int numSines = 2;
-// float[] sineVolume;
-// float volume = (1.0 / numSines);
-// float volume = 0.2;
 
 
 void setup() {
@@ -49,26 +47,18 @@ void setup() {
     controller.getButton("circle").plug(this, "circlePressed", ControlIO.ON_RELEASE);
 
 
+    // SOUND SETUP
     rotationClap = new SoundFile(this, "rotationClap.wav");
     scaleClap = new SoundFile(this, "scaleClap.wav");
     selectionClap = new SoundFile(this, "selectionClap.wav");
     ambiantSound = new SoundFile(this, "ambiant.wav");
-    /*
-    // SOUND SETUP
-    sineWaves = new SinOsc[numSines];
-    sineVolume = new float[numSines];
-    for (int i = 0; i < numSines; i++) {
-        // The overall amplitude shouldn't exceed 1.0 which is prevented by 1.0/numSines.
-        // The ascending waves will get lower in volume the higher the frequency.
-        sineVolume[i] = volume / (i + 1);
 
-        // Create the Sine Oscillators and start them
-        sineWaves[i] = new SinOsc(this);
-        //sineWaves[i].play();
-    }
-    */
+    // BEADS SETUP
+    // rotationClapPath = sketchPath("") + "data/rotationClap.wav";
 
-    // GAME INSTANCES
+
+
+    // GAME INSTANCE
     game = new Game(controller, this);
 }
 
@@ -85,19 +75,19 @@ void draw() {
         game.levelComplete();
     }
     
-    /*
+
     // SOUND
-    float frequency = pow(700, map(layer1.getDistanceToOrigin(), 0, 848, 0, 1)) + 300;
-    // float frequency = 200;
-    float detune = map(layer1.getDistanceToOrigin() + layer2.getDistanceToOrigin(), 0, 1500, 0.5, 10);
+    // float frequency = pow(700, map(layer1.getDistanceToOrigin(), 0, 848, 0, 1)) + 300;
+    // // float frequency = 200;
+    // float detune = map(layer1.getDistanceToOrigin() + layer2.getDistanceToOrigin(), 0, 1500, 0.5, 10);
     
 
-    // Set the frequencies, detuning and volume
-    for (int i = 0; i < numSines; i++) { 
-        sineWaves[i].freq(frequency * (i + 1 + i * detune));
-        sineWaves[i].amp(sineVolume[i]);
-    }
-    */
+    // // Set the frequencies, detuning and volume
+    // for (int i = 0; i < numSines; i++) { 
+    //     sineWaves[i].freq(frequency * (i + 1 + i * detune));
+    //     sineWaves[i].amp(sineVolume[i]);
+    // }
+
 
     // FPS COUNTER
     blendMode(BLEND);

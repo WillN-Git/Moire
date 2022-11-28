@@ -22,6 +22,7 @@ class Layer {
     Layer(Map levelParams) {
         this.levelParams = levelParams;
         this.params = new Params();
+        this.rotation = (180 / (int)levelParams.get("shapeSides"));
         this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
         this.rotationClapPlayed = false;
         this.scale = 1;
@@ -31,7 +32,7 @@ class Layer {
         this.shapeSides = (int)levelParams.get("shapeSides");
         this.shapeQuantity = 100;
         this.shapeSpacing = 20;
-        this.strokeWeight = 4;
+        this.strokeWeight = 8;
     }
 
     float getPositionX() {
@@ -112,7 +113,7 @@ class Layer {
             setPositionY((int)(getPositionY() + controller.getSlider("leftJoyY").getValue() * params.getLayerTranslationSpeed()));
         }
 
-        if (this.rotationControlEnabled) {
+        if (this.scaleControlEnabled) {
             if (abs(controller.getSlider("rightJoyY").getValue()) >= params.getJoystickDeadZone()) {
                 setScale(getScale() - controller.getSlider("rightJoyY").getValue() * params.getLayerScaleSpeed());
             }

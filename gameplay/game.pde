@@ -8,6 +8,12 @@ class Game {
     boolean isFinished;
     PApplet parentPApplet; // needed for sound library
 
+    // BEADS
+    // String ambiantSoundPath;
+    // SamplePlayer ambiantSoundPlayer;
+    // String rotationClapPath;
+    // SamplePlayer rotationClapPlayer;
+
     Game(ControlDevice controller, PApplet parentPApplet) {
         this.controller = controller;
         this.levelsParams = new LevelsParams();
@@ -18,6 +24,14 @@ class Game {
         this.levels = new Level[levelQuantity];
         this.isFinished = false;
         this.parentPApplet = parentPApplet;
+
+        // BEADS
+        // this.ambiantSoundPath = (sketchPath("") + "data/ambiant.wav");
+        // this.ambiantSoundPlayer = new SamplePlayer(SampleManager.sample(this.ambiantSoundPath));
+        // this.ambiantSoundPlayer.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+        // this.rotationClapPath = (sketchPath("") + "data/rotationClap.wav");
+        // this.rotationClapPlayer = new SamplePlayer(SampleManager.sample(this.rotationClapPath));
+
         populateLevels();
     }
 
@@ -46,33 +60,36 @@ class Game {
         return levels;
     }
 
-    // boolean isFinished() {
-    //     return isFinished;
-    // }
-
-    // void markFinished() {
-    //     this.isFinished = true;
-    // }
-
     void levelComplete() {
-        background(0, 0, 0);
-        text("LEVEL COMPLETE", width / 2, height / 2);
-        delay(5000);
-
         if (this.currentLevel == this.levelQuantity) {
             this.isFinished = true;
         }
 
         if (this.isFinished) {
-            background(0, 0, 0);
-            text("THANKS FOR PLAYING", width / 2, height / 2);
-            delay(5000);
-            System.exit(-1); // End the program
+            gameComplete();
         }
         else {
             this.levels[currentLevel].levelComplete();
+
+            int pauseTime = 3000; // ms
+            boolean timeElapsed = false;
+            int time = millis();
+
+            while (! timeElapsed) {
+                if (millis() - time > pauseTime) {
+                    timeElapsed = true;
+                }
+            }
+
             goToNextLevel();
         }
+    }
+
+    void gameComplete() {
+        background(0, 0, 0);
+        text("THANKS FOR PLAYING", width / 2, height / 2);
+        delay(5000);
+        System.exit(-1); // End the program
     }
 }
 
