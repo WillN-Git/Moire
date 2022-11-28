@@ -1,16 +1,17 @@
-import processing.sound.*;
-
-SoundFile ambientAudio;
-SoundFile btnHoverSound;
+import controlP5.*;
 
 Cover cover;
 Canvas canvas;
 MouseTracker mouseTracker;
+ControlP5 controlP5;
+
 Button button;
 int i = 0;
 
 void setup() {
     size(1080, 800);
+
+    controlP5 = new ControlP5(this);
 
     // float x = width * 0.5;
     // float y = height * 0.5;
@@ -18,22 +19,17 @@ void setup() {
     // float h = height * 0.6;
 
     // canvas = new Canvas(x, y, w, h);
-
-    ambientAudio = new SoundFile(this, "../sound/ambient.wav");
-    ambientAudio.play();
-    
-    btnHoverSound = new SoundFile(this, "../sound/selection_item.wav");
-    button = new Button();
-    button.setHoverSound(btnHoverSound);
+    // button = new Button();
 }
 
 void draw() {
     Cover cover = new Cover();
     cover.draw();
-    
-    button.draw();
-    
-    
+
+    controlP5.addButton("Jouer")
+     .setPosition(width * 0.5 , height * 0.5)
+     .setImages(loadImage("Arrow-Left.png"), loadImage("Arrow-Right.png"), loadImage("Refresh.png"))
+     .setSize(200, 100);
 
     // MouseTracker m = new MouseTracker();
     // m.draw();
