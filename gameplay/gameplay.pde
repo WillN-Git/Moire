@@ -12,11 +12,10 @@ SoundFile scaleClap;
 SoundFile selectionClap;
 SoundFile ambiantSound;
 
-// TEST AUDIO LIBRARY BEADS
+// BEADS LIBRARY FOR DISTANCE SOUND
 import beads.*;
 import java.util.Arrays; 
 AudioContext ac;
-// String rotationClapPath;
 
 // GRAPHICS RELATED VARIABLES
 int fpsFontSize = 20;
@@ -53,10 +52,6 @@ void setup() {
     selectionClap = new SoundFile(this, "selectionClap.wav");
     ambiantSound = new SoundFile(this, "ambiant.wav");
 
-    // BEADS SETUP
-    // rotationClapPath = sketchPath("") + "data/rotationClap.wav";
-
-
 
     // GAME INSTANCE
     game = new Game(controller, this);
@@ -75,20 +70,6 @@ void draw() {
         game.levelComplete();
     }
     
-
-    // SOUND
-    // float frequency = pow(700, map(layer1.getDistanceToOrigin(), 0, 848, 0, 1)) + 300;
-    // // float frequency = 200;
-    // float detune = map(layer1.getDistanceToOrigin() + layer2.getDistanceToOrigin(), 0, 1500, 0.5, 10);
-    
-
-    // // Set the frequencies, detuning and volume
-    // for (int i = 0; i < numSines; i++) { 
-    //     sineWaves[i].freq(frequency * (i + 1 + i * detune));
-    //     sineWaves[i].amp(sineVolume[i]);
-    // }
-
-
     // FPS COUNTER
     blendMode(BLEND);
     text((int)frameRate, 0, 20);
