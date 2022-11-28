@@ -303,12 +303,12 @@ class Level {
             scale(layers[i].getScale());
             for (int j = 0; j < shapeQuantity; j++) {
                 switch(shapeType) {
-                case "circle":
-                    ellipse(0, 0, (width / 40) + (j * shapeSpacing), (height / 40) + (j * shapeSpacing));
-                    break;
-                case "square":
-                    square(0, 0, (width / 40) + (j * shapeSpacing));
-                    break;
+                    case "circle":
+                        ellipse(0, 0, (width / 40) + (j * shapeSpacing), (height / 40) + (j * shapeSpacing));
+                        break;
+                    case "square":
+                        square(0, 0, (width / 40) + (j * shapeSpacing));
+                        break;
                 }   
             }
             popMatrix();
