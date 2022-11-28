@@ -12,6 +12,7 @@ class Game {
         this.controller = controller;
         this.levelsParams = new LevelsParams();
         this.levelsParamsList = levelsParams.getParamsList();
+        println(levelsParamsList);
         this.levelQuantity = levelsParams.getLevelQuantity();
         this.currentLevel = 1;
         this.levels = new Level[levelQuantity];
@@ -37,6 +38,7 @@ class Game {
     void populateLevels() {
         for (int i = 0; i < levelQuantity; i++) {
             this.levels[i] = new Level(levelsParamsList[i], controller, parentPApplet);
+            println(levelsParamsList[i]);
         }
     }
 

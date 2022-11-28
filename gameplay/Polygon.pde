@@ -1,21 +1,21 @@
 class Polygon extends Layer {
-    int sides;
+    // int sides;
     float radius;
-    // boolean rotationControlEnabled;
 
 
     Polygon(Map levelParams) {
         super(levelParams);
-        this.sides = (int)levelParams.get("shapeSides");
+        // this.sides = (int)levelParams.get("shapeSides");
         this.radius = width / 40;
-        // this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
-        println(sides);
     }
 
-    void init() {
-        int[] coordLayer = utils.generateRandomCoord(0, width / 2, 0, height / 2);
-        positionX = coordLayer[0];
-        positionY = coordLayer[1];
+    void init(boolean hasColor) {
+        strokeWeight(strokeWeight);
+        // println(this.levelParams);
+
+        int[] coordLayer = utils.generateRandomCoord(0, width, 0, height);
+        this.positionX = coordLayer[0];
+        this.positionY = coordLayer[1];
 
 
         if (hasColor) {
@@ -25,25 +25,27 @@ class Polygon extends Layer {
             this.strokeColor = color(0, 0, 0);
         }
 
-        // if (rotationControlEnabled) {
-        //     this.rotation = utils.generateRandomRot() % (360 / this.sides);
-        // }
+        if (this.rotationControlEnabled) {
+            this.rotation = utils.generateRandomRot() % (360 / this.shapeSides);
+        }
 
-        // if (scaleControlEnabled) {
-        //     layers[i].setScale(utils.generateRandomScale());
-        // }
+        if (this.scaleControlEnabled) {
+            this.scale = utils.generateRandomScale();
+        }
     }
 
     void draw() {
+        // println(this.strokeColor, this.positionX, this.positionY, this.rotation, this.scale);
         pushMatrix();
         stroke(this.strokeColor);
         translate(this.positionX, this.positionY);
         rotate(radians(this.rotation));
+        // println(this.rotation);
         scale(this.scale);
+        // square(0, 0, 100);
 
-        for(int i=0; i < shapeQuantity; i++) {
+        for(int i=0; i < this.shapeQuantity; i++) {
             drawPoly(this.radius + i * this.shapeSpacing);
-            
         }
 
         popMatrix();
@@ -51,7 +53,7 @@ class Polygon extends Layer {
 
 
     void drawPoly(float radius) {
-        float angle = TWO_PI / this.sides;
+        float angle = TWO_PI / this.shapeSides;
         beginShape();
         for(float a = 0; a < TWO_PI; a += angle) {
             float sx = radius * cos(a);

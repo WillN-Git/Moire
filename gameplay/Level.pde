@@ -3,41 +3,25 @@ class Level {
     int levelID;
     int layerQuantity;
     Polygon[] layers;
-    // String shapeType;
-    int shapeSides;
-    int shapeQuantity;
-    int shapeSpacing;
-    int strokeWeight;
     boolean hasColor;
     float totalDistanceToOrigin;
     int circleButtonPressedCount;
     int layerToControl;
-    boolean rotationControlEnabled;
     float sumOfLayersRotations;
-    boolean scaleControlEnabled;
     float sumOfLayersScalesDifferences;
     boolean hasBeenSetUp;
     boolean isComplete;
-    // Layer background;
     ControlDevice controller;
     PApplet parentPApplet; // needed for sound library
-    // Polygon polygon;
 
     Level(Map levelParams, ControlDevice controller, PApplet parentPApplet) {
         this.levelParams = levelParams;
         this.levelID = (int)levelParams.get("ID");
         this.layerQuantity = (int)levelParams.get("layerQuantity");
         this.layers = new Polygon[layerQuantity + 1]; // +1 because layers[0] = background
-        // this.shapeType = levelParams.get("shapeType").toString();
-        this.shapeSides = (int)levelParams.get("shapeSides");
-        this.shapeQuantity = 100;
-        this.shapeSpacing = 20;
-        this.strokeWeight = 4;
         this.hasColor = (boolean)levelParams.get("hasColor");
         this.circleButtonPressedCount = 0;
         this.layerToControl = 1;
-        this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
-        this.scaleControlEnabled = (boolean)levelParams.get("scaleControlEnabled");
         this.hasBeenSetUp = false;
         this.isComplete = false;
         this.controller = controller;
@@ -46,12 +30,7 @@ class Level {
     }
 
     void instanciateLayers() {
-        // Map backgroundParams = levelParams;
-        // backgroundParams.replace("hasColor", false);
-        // println(backgroundParams);
-        this.layers[0] = new Polygon(levelParams); //background
-
-        for (int i = 1; i <= layerQuantity; i++) {
+        for (int i = 0; i <= layerQuantity; i++) {
             this.layers[i] = new Polygon(levelParams);
         }
     }
@@ -76,14 +55,6 @@ class Level {
         this.layerToControl = (circleButtonPressedCount % layerQuantity) + 1;
     }
 
-    boolean isRotationControlEnabled() {
-        return rotationControlEnabled;
-    }
-
-    boolean isScaleControlEnabled() {
-        return scaleControlEnabled;
-    }
-
     boolean hasBeenSetUp() {
         return hasBeenSetUp;
     }
@@ -91,10 +62,13 @@ class Level {
     void setupLevel() {
         println("--------");
         println("LEVEL", game.getCurrentLevel());
-        strokeWeight(strokeWeight);
 
-        for (int i = 0; i <= layerQuantity; i++) {
-            layers[i].init();
+        // BACKGROUND STATIC LAYER
+        layers[0].init(false);
+        
+        // DYNAMIC LAYERS
+        for (int i = 1; i <= layerQuantity; i++) {
+            layers[i].init(this.hasColor);
         }
 
         // SOUND SETUP
@@ -131,25 +105,6 @@ class Level {
         this.sumOfLayersRotations = 0;
         this.sumOfLayersScalesDifferences = 0;
 
-        for (int layer = 1; layer <= layerQuantity; layer++) { // start at 1 because layers[0] is background
-            if (layerToControl == layer) {
-                layers[layer].updatePosition(controller);
-            }
-            layers[layer].computeDistanceToOrigin(layers[0].getPositionX(), layers[0].getPositionY());
-            this.totalDistanceToOrigin += layers[layer].getDistanceToOrigin();
-
-            layers[layer].computeRotationToBackground(layers[0].getRotation());
-            // switch (shapeType) {
-            //     case "square":
-            //         this.sumOfLayersRotations += (layers[layer].getRotationToBackground() % 90);
-            // }
-
-            layers[layer].computeScaleToBackground(layers[0].getScale());
-            this.sumOfLayersScalesDifferences += (layers[layer].getScaleToBackground());
-        }
-
-        this.isComplete = checkIfComplete();
-
         background(100, 100, 100);
         rectMode(CENTER);
 
@@ -166,7 +121,41 @@ class Level {
         }
 
         for(int i=1; i <= this.layerQuantity; i++) {
+            if (this.layerToControl == i) {
+                layers[i].updatePosition(controller);
+            }
+
             this.layers[i].draw();
+
+            layers[i].computeDistanceToOrigin(layers[0].getPositionX(), layers[0].getPositionY());
+            layers[i].computeRotationToBackground(layers[0].getRotation());
+            layers[i].computeScaleToBackground(layers[0].getScale());
+            
+
+            // ROTATION CLAP SOUND
+            if ((layers[i].getRotationToBackground() < 1) && (! layers[i].rotationClapPlayed)) {
+                rotationClap.play();
+                layers[i].rotationClapPlayed = true;
+            }
+            if (layers[i].getRotationToBackground() > 1) {
+                layers[i].rotationClapPlayed = false;
+            }
+
+            // SCALE CLAP SOUND
+            if ((layers[i].getScaleToBackground() < 0.1) && (! layers[i].scaleClapPlayed)) {
+                scaleClap.play();
+                layers[i].scaleClapPlayed = true;
+            }
+            if (layers[i].getScaleToBackground() > 0.1) {
+                layers[i].scaleClapPlayed = false;
+            }
+
+
+            this.totalDistanceToOrigin += layers[i].getDistanceToOrigin();
+            this.sumOfLayersRotations += layers[i].getRotationToBackground();
+            this.sumOfLayersScalesDifferences += (layers[i].getScaleToBackground());
         }
+
+        this.isComplete = checkIfComplete();
     }
 }

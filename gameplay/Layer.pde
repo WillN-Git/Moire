@@ -1,29 +1,37 @@
 class Layer {
+    Map levelParams;
     float positionX;
     float positionY;
     float distanceToOrigin;
     float rotation;
     float rotationToBackground;
+    boolean rotationControlEnabled;
     boolean rotationClapPlayed;
     float scale;
     float scaleToBackground; // in percentage of difference
+    boolean scaleControlEnabled;
     boolean scaleClapPlayed;
     boolean hasColor;
     color strokeColor;
-    // int shapeSides;
+    int shapeSides;
     int shapeQuantity;
     int shapeSpacing;
+    int strokeWeight;
     Params params;
 
     Layer(Map levelParams) {
+        this.levelParams = levelParams;
         this.params = new Params();
+        this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
         this.rotationClapPlayed = false;
         this.scale = 1;
+        this.scaleControlEnabled = (boolean)levelParams.get("scaleControlEnabled");
         this.scaleClapPlayed = false;
-        this.hasColor = hasColor;
-        //this.shapeSides = shapeSides;
-        this.shapeQuantity = shapeQuantity;
-        this.shapeSpacing = shapeSpacing;
+        this.hasColor = (boolean)levelParams.get("hasColor");
+        this.shapeSides = (int)levelParams.get("shapeSides");
+        this.shapeQuantity = 100;
+        this.shapeSpacing = 20;
+        this.strokeWeight = 4;
     }
 
     float getPositionX() {
@@ -68,7 +76,7 @@ class Layer {
     }
 
     void computeRotationToBackground(float backgroundRotation) {
-        this.rotationToBackground = abs(backgroundRotation - getRotation());
+        this.rotationToBackground = abs(backgroundRotation - this.rotation);
     }
 
     float getScale() {
@@ -104,7 +112,7 @@ class Layer {
             setPositionY((int)(getPositionY() + controller.getSlider("leftJoyY").getValue() * params.getLayerTranslationSpeed()));
         }
 
-        if (game.getLevels()[game.getCurrentLevel() - 1].isScaleControlEnabled()) {
+        if (this.rotationControlEnabled) {
             if (abs(controller.getSlider("rightJoyY").getValue()) >= params.getJoystickDeadZone()) {
                 setScale(getScale() - controller.getSlider("rightJoyY").getValue() * params.getLayerScaleSpeed());
             }
@@ -118,10 +126,11 @@ class Layer {
             }
         }
 
-        if (game.getLevels()[game.getCurrentLevel() - 1].isRotationControlEnabled()) {
+        if (this.rotationControlEnabled) {
             float l2 = map(controller.getSlider("l2").getValue(), -1, 1, 0, 1);
             float r2 = map(controller.getSlider("r2").getValue(), -1, 1, 0, 1);
-            setRotation((getRotation() + (r2 - l2) * params.getTriggerSpeed()));
+            this.rotation += (r2 - l2) * params.getTriggerSpeed();
+
             if (controller.getButton("r1").pressed()) {
                 this.rotation += 0.05;
             }
@@ -129,6 +138,9 @@ class Layer {
             if (controller.getButton("l1").pressed()) {
                 this.rotation -= 0.05;
             }
+
+            // Nasty formula to map the rotation to only positive value 0 <= x <= (360 / this.shapeSides)
+            this.rotation = ((this.rotation % (360 / this.shapeSides)) + (360 / this.shapeSides)) % (360 / this.shapeSides);
         }
 
         if (controller.getHat("crosspad").left()) {
