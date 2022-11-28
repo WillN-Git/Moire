@@ -15,7 +15,7 @@ class LevelsParams{
     Map[] paramsList;
 
     LevelsParams() {
-        this.levelQuantity = 1;
+        this.levelQuantity = 2;
 
         // // 1 CIRCLE, NO COLOR
         // this.level1Params = Map.of(
@@ -126,6 +126,15 @@ class LevelsParams{
             put("rotationControlEnabled", true);
             put("scaleControlEnabled", true);
         }};
+
+        this.level2Params = new HashMap() {{
+            put("ID", 2);
+            put("layerQuantity", 2);
+            put("shapeSides", 3);
+            put("hasColor", true);
+            put("rotationControlEnabled", true);
+            put("scaleControlEnabled", true);
+        }};
             
 
         populateParamsList();
@@ -138,7 +147,7 @@ class LevelsParams{
     void populateParamsList() {
         this.paramsList = new Map[levelQuantity];
         this.paramsList[0] = level1Params;
-        // this.paramsList[1] = level2Params;
+        this.paramsList[1] = level2Params;
         // this.paramsList[2] = level3Params;
         // this.paramsList[3] = level4Params;
         // this.paramsList[4] = level5Params;

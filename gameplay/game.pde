@@ -30,7 +30,7 @@ class Game {
         return currentLevel;
     }
 
-    void nextLevel() {
+    void goToNextLevel() {
         this.currentLevel += 1;
     }
 
@@ -46,12 +46,33 @@ class Game {
         return levels;
     }
 
-    boolean isFinished() {
-        return isFinished;
-    }
+    // boolean isFinished() {
+    //     return isFinished;
+    // }
 
-    void markFinished() {
-        this.isFinished = true;
+    // void markFinished() {
+    //     this.isFinished = true;
+    // }
+
+    void levelComplete() {
+        background(0, 0, 0);
+        text("LEVEL COMPLETE", width / 2, height / 2);
+        delay(5000);
+
+        if (this.currentLevel == this.levelQuantity) {
+            this.isFinished = true;
+        }
+
+        if (this.isFinished) {
+            background(0, 0, 0);
+            text("THANKS FOR PLAYING", width / 2, height / 2);
+            delay(5000);
+            System.exit(-1); // End the program
+        }
+        else {
+            this.levels[currentLevel].levelComplete();
+            goToNextLevel();
+        }
     }
 }
 

@@ -9,6 +9,8 @@ Utils utils = new Utils();
 import processing.sound.*;
 SoundFile rotationClap;
 SoundFile scaleClap;
+SoundFile selectionClap;
+SoundFile ambiantSound;
 
 // GRAPHICS RELATED VARIABLES
 int fpsFontSize = 20;
@@ -49,6 +51,8 @@ void setup() {
 
     rotationClap = new SoundFile(this, "rotationClap.wav");
     scaleClap = new SoundFile(this, "scaleClap.wav");
+    selectionClap = new SoundFile(this, "selectionClap.wav");
+    ambiantSound = new SoundFile(this, "ambiant.wav");
     /*
     // SOUND SETUP
     sineWaves = new SinOsc[numSines];
@@ -78,7 +82,7 @@ void draw() {
         game.getLevels()[game.getCurrentLevel() - 1].drawLevel();
     }
     else {
-        levelComplete();
+        game.levelComplete();
     }
     
     /*
@@ -104,63 +108,3 @@ void draw() {
 void circlePressed() {
     game.getLevels()[game.getCurrentLevel() - 1].circleButtonPressed();
 }
-
-
-void levelComplete() {
-    background(0, 0, 0);
-    text("LEVEL COMPLETE", width / 2, height / 2);
-    delay(5000);
-
-    if (game.getCurrentLevel() == game.getLevelQuantity()) {
-        game.markFinished();
-    }
-
-    if (game.isFinished()) {
-        background(0, 0, 0);
-        text("THANKS FOR PLAYING", width / 2, height / 2);
-        delay(5000);
-        System.exit(-1); // End the program
-    }
-    else {
-        game.nextLevel();
-    }
-}
-
-/*
-void keyPressed() {
-
-        // UP
-        if (keyCode == 38) {
-        }
-        
-        // DOWN
-        else if (keyCode == 40) {
-        }
-        
-        // LEFT
-        else if (keyCode == 37) {
-        }
-        
-        // RIGHT
-        else if (keyCode == 39) {
-        }
-        
-        // Z
-        else if (keyCode == 90) {
-        }
-        
-        // S
-        else if (keyCode == 83) {
-        }
-            
-        // Q
-        else if (keyCode == 81) {
-        }
-        
-        // D
-        else if (keyCode == 68) {
-        }
-
-    println(keyCode);
-}
-*/

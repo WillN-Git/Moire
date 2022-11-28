@@ -53,6 +53,7 @@ class Level {
         updateLayerToControl();
         if (hasColor && layerQuantity > 1) {
             this.layers[getLayerToControl() - 1].setStrokeColor(utils.generateRandomColor());
+            selectionClap.play();
         }
     }
 
@@ -93,8 +94,10 @@ class Level {
 
             // Create the Sine Oscillators and start them
             this.sineWaves[i] = new SinOsc(this.parentPApplet);
-            this.sineWaves[i].play();
+            //this.sineWaves[i].play();
         }
+
+        ambiantSound.loop();
 
         this.hasBeenSetUp = true;
     }
@@ -179,9 +182,13 @@ class Level {
             // this.sineWaves[i].freq(frequency * (i + 1 + i * detune));
             // sineWaves[i].amp(sineVolume[i]);
             // this.sineWaves[i].amp(cos(second()));
-            this.sineWaves[i].freq(frequency * cos(millis()) + 0.5);
+            //this.sineWaves[i].freq(frequency * cos(millis()) + 0.5);
         }
 
         this.isComplete = checkIfComplete();
+    }
+
+    void levelComplete() {
+        ambiantSound.stop();
     }
 }
