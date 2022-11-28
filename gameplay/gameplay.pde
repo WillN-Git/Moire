@@ -7,6 +7,8 @@ Utils utils = new Utils();
 
 // SOUND LIBRARY
 import processing.sound.*;
+SoundFile rotationClap;
+SoundFile scaleClap;
 
 // GRAPHICS RELATED VARIABLES
 int fpsFontSize = 20;
@@ -22,8 +24,8 @@ ControlDevice controller;
 SinOsc[] sineWaves;
 int numSines = 2;
 float[] sineVolume;
-// float volume = (1.0 / numSines);
-float volume = 0.2;
+float volume = (1.0 / numSines);
+// float volume = 0.2;
 
 
 void setup() {
@@ -44,6 +46,10 @@ void setup() {
     // Setup a function to trap events for this button
     controller.getButton("circle").plug(this, "circlePressed", ControlIO.ON_RELEASE);
 
+
+    rotationClap = new SoundFile(this, "rotationClap.wav");
+    scaleClap = new SoundFile(this, "scaleClap.wav");
+    /*
     // SOUND SETUP
     sineWaves = new SinOsc[numSines];
     sineVolume = new float[numSines];
@@ -56,9 +62,10 @@ void setup() {
         sineWaves[i] = new SinOsc(this);
         //sineWaves[i].play();
     }
+    */
 
     // GAME INSTANCES
-    game = new Game(controller);
+    game = new Game(controller, this);
 }
 
 
@@ -74,8 +81,8 @@ void draw() {
         levelComplete();
     }
     
-    // SOUND
     /*
+    // SOUND
     float frequency = pow(700, map(layer1.getDistanceToOrigin(), 0, 848, 0, 1)) + 300;
     // float frequency = 200;
     float detune = map(layer1.getDistanceToOrigin() + layer2.getDistanceToOrigin(), 0, 1500, 0.5, 10);

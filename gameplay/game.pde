@@ -6,8 +6,9 @@ class Game {
     int currentLevel;
     Level[] levels;
     boolean isFinished;
+    PApplet parentPApplet; // needed for sound library
 
-    Game(ControlDevice controller) {
+    Game(ControlDevice controller, PApplet parentPApplet) {
         this.controller = controller;
         this.levelsParams = new LevelsParams();
         this.levelsParamsList = levelsParams.getParamsList();
@@ -15,6 +16,7 @@ class Game {
         this.currentLevel = 1;
         this.levels = new Level[levelQuantity];
         this.isFinished = false;
+        this.parentPApplet = parentPApplet;
         populateLevels();
     }
 
@@ -34,7 +36,7 @@ class Game {
     
     void populateLevels() {
         for (int i = 0; i < levelQuantity; i++) {
-            this.levels[i] = new Level(levelsParamsList[i], controller);
+            this.levels[i] = new Level(levelsParamsList[i], controller, parentPApplet);
         }
     }
 

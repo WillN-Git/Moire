@@ -4,15 +4,26 @@ class Layer {
     float distanceToOrigin;
     float rotation;
     float rotationToBackground;
+    boolean rotationClapPlayed;
     float scale;
     float scaleToBackground; // in percentage of difference
+    boolean scaleClapPlayed;
+    boolean hasColor;
     color strokeColor;
+    // int shapeSides;
     int shapeQuantity;
+    int shapeSpacing;
     Params params;
 
-    Layer() {
+    Layer(Map levelParams) {
         this.params = new Params();
+        this.rotationClapPlayed = false;
         this.scale = 1;
+        this.scaleClapPlayed = false;
+        this.hasColor = hasColor;
+        //this.shapeSides = shapeSides;
+        this.shapeQuantity = shapeQuantity;
+        this.shapeSpacing = shapeSpacing;
     }
 
     float getPositionX() {
