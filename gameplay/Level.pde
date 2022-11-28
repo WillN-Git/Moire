@@ -15,6 +15,7 @@ class Level {
 
     // SOUND LIBRARY
     PApplet parentPApplet; // needed for sound library
+    Sound master;
 
     // BEADS LIBRARY
     WavePlayer lfoFreq;
@@ -22,6 +23,9 @@ class Level {
     Function function;
     WavePlayer distanceSoundWave;
     Gain distanceSoundGain;
+
+    Glide carrierFreq;
+    Glide modFreqRatio;
 
 
     Level(Map levelParams, ControlDevice controller, PApplet parentPApplet) {
@@ -36,6 +40,7 @@ class Level {
         this.isComplete = false;
         this.controller = controller;
         this.parentPApplet = parentPApplet;
+        this.master = new Sound(this.parentPApplet);
         instanciateLayers();
     }
 
@@ -46,21 +51,43 @@ class Level {
     }
 
     void initBeads() {
-        ac = AudioContext.getDefaultContext();
-        this.lfoFreq = new WavePlayer(1, Buffer.SINE);
-        this.lfoAmp = new WavePlayer(0.1, Buffer.SINE);
+        // ac = AudioContext.getDefaultContext();
+        // this.lfoFreq = new WavePlayer(1, Buffer.SINE);
+        // this.lfoAmp = new WavePlayer(0.1, Buffer.SINE);
 
-        this.function = new Function(lfoFreq) {
-            float calculate() {
-                return x[0] * 50.0 + 200.0;
+        // this.function = new Function(lfoFreq) {
+        //     float calculate() {
+        //         return x[0] * 50.0 + 200.0;
+        //     }
+        // };
+
+        // this.distanceSoundWave = new WavePlayer(function, Buffer.SINE);
+        // this.distanceSoundGain = new Gain(1, this.lfoAmp);
+        // this.distanceSoundGain.addInput(this.distanceSoundWave);
+        // ac.out.addInput(this.distanceSoundGain);
+        // ac.start();
+
+
+        ac = AudioContext.getDefaultContext();
+        this.carrierFreq = new Glide(5);
+        this.modFreqRatio = new Glide(1);
+        Function modFreq = new Function(carrierFreq, modFreqRatio) {
+            public float calculate() {
+            return x[0] * x[1];
             }
         };
-
-        this.distanceSoundWave = new WavePlayer(function, Buffer.SINE);
-        this.distanceSoundGain = new Gain(1, this.lfoAmp);
+        WavePlayer freqModulator = new WavePlayer(modFreq, Buffer.SINE);
+        Function carrierMod = new Function(freqModulator, carrierFreq) {
+            public float calculate() {
+            return x[0] * 400.0 + x[1];    
+            }
+        };
+        this.distanceSoundWave = new WavePlayer(carrierMod, Buffer.SINE);
+        this.distanceSoundGain = new Gain(1, 0.2);
         this.distanceSoundGain.addInput(this.distanceSoundWave);
         ac.out.addInput(this.distanceSoundGain);
         ac.start();
+
     }
 
     boolean isComplete() {
@@ -101,6 +128,7 @@ class Level {
         }
 
         // SOUND SETUP
+        master.volume(0.3);
         ambiantSound.loop();
 
         // DISTANCE SOUND INIT
@@ -179,9 +207,10 @@ class Level {
 
         // CONTINUOUS SOUND RELATED TO SHAPES DISTANCES TO ORIGIN
         // BEADS LIBRARY
-        this.lfoFreq.setFrequency(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.05, 3));
-        this.lfoAmp.setFrequency(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.06, 3));
+        // this.lfoFreq.setFrequency(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.05, 3));
+        // this.lfoAmp.setFrequency(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.06, 3));
 
+        this.modFreqRatio.setValue(map(this.totalDistanceToOrigin, 0, width * this.layerQuantity, 0.1, 20));
 
         this.isComplete = checkIfComplete();
     }
