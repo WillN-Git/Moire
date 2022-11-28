@@ -7,6 +7,7 @@ Utils utils = new Utils();
 
 // SOUND LIBRARY
 import processing.sound.*;
+SoundFile rotationClap;
 
 // GRAPHICS RELATED VARIABLES
 int fpsFontSize = 20;
@@ -44,6 +45,8 @@ void setup() {
     // Setup a function to trap events for this button
     controller.getButton("circle").plug(this, "circlePressed", ControlIO.ON_RELEASE);
 
+
+    rotationClap = new SoundFile(this, "rotationClap.wav");
     /*
     // SOUND SETUP
     sineWaves = new SinOsc[numSines];

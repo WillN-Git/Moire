@@ -13,7 +13,7 @@ class Game {
         this.levelsParams = new LevelsParams();
         this.levelsParamsList = levelsParams.getParamsList();
         this.levelQuantity = levelsParams.getLevelQuantity();
-        this.currentLevel = 8;
+        this.currentLevel = 6;
         this.levels = new Level[levelQuantity];
         this.isFinished = false;
         // this.parentPApplet = parentPApplet;
@@ -312,9 +312,21 @@ class Level {
                 }   
             }
             popMatrix();
+
+            // CLAP SOUNDS
+            if ((layers[i].getRotationToBackground() % 90 ) < 1 && ! layers[i].rotationClapPlayed) {
+                rotationClap.play();
+                layers[i].rotationClapPlayed = true;
+            }
+
+            if ((layers[i].getRotationToBackground() % 90 ) > 1) {
+                layers[i].rotationClapPlayed = false;
+            }
+
+            println(layers[i].getRotationToBackground() % 90, layers[i].getRotationToBackground());
         }
 
-        
+
         /*// SOUND
         float frequency = pow(700, map(totalDistanceToOrigin, 0, 848, 0, 1)) + 300;
         // float frequency = 200;

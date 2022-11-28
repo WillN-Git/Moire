@@ -4,6 +4,7 @@ class Layer {
     float distanceToOrigin;
     float rotation;
     float rotationToBackground;
+    boolean rotationClapPlayed;
     float scale;
     float scaleToBackground; // in percentage of difference
     color strokeColor;
@@ -11,6 +12,7 @@ class Layer {
 
     Layer() {
         this.params = new Params();
+        this.rotationClapPlayed = false;
         this.scale = 1;
     }
 
