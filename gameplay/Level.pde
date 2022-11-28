@@ -13,6 +13,11 @@ class Level {
     boolean isComplete;
     ControlDevice controller;
     PApplet parentPApplet; // needed for sound library
+    int numSines;
+    float volume;
+    SinOsc[] sineWaves;
+    float[] sineVolume;
+
 
     Level(Map levelParams, ControlDevice controller, PApplet parentPApplet) {
         this.levelParams = levelParams;
@@ -26,6 +31,10 @@ class Level {
         this.isComplete = false;
         this.controller = controller;
         this.parentPApplet = parentPApplet;
+        this.numSines = 2;
+        this.volume = (1.0 / this.numSines);
+        this.sineWaves = new SinOsc[numSines];
+        this.sineVolume = new float[numSines];
         instanciateLayers();
     }
 
@@ -72,16 +81,19 @@ class Level {
         }
 
         // SOUND SETUP
-        sineWaves = new SinOsc[numSines];
-        sineVolume = new float[numSines];
-        for (int i = 0; i < numSines; i++) {
+        // int numSines = 2;
+        // float volume = (1.0 / numSines);
+        // SinOsc[] sineWaves = new SinOsc[numSines];
+        // float[] sineVolume = new float[numSines];
+        //SinOsc lfo = new SinOsc();
+        for (int i = 0; i < this.numSines; i++) {
             // The overall amplitude shouldn't exceed 1.0 which is prevented by 1.0/numSines.
             // The ascending waves will get lower in volume the higher the frequency.
-            sineVolume[i] = volume / (i + 1);
+            this.sineVolume[i] = this.volume / (i + 1);
 
             // Create the Sine Oscillators and start them
-            sineWaves[i] = new SinOsc(parentPApplet);
-            sineWaves[i].play();
+            this.sineWaves[i] = new SinOsc(this.parentPApplet);
+            this.sineWaves[i].play();
         }
 
         this.hasBeenSetUp = true;
@@ -154,6 +166,20 @@ class Level {
             this.totalDistanceToOrigin += layers[i].getDistanceToOrigin();
             this.sumOfLayersRotations += layers[i].getRotationToBackground();
             this.sumOfLayersScalesDifferences += (layers[i].getScaleToBackground());
+        }
+
+        // CONTINUOUS SOUND RELATED TO SHAPES DISTANCES TO ORIGIN
+        float frequency = pow(300, map(this.totalDistanceToOrigin, 0, 848, 0, 1)) + 150;
+        // float frequency = 200;
+        float detune = map(this.totalDistanceToOrigin, 0, 1500, 0.5, 10);
+        
+
+        // Set the frequencies, detuning and volume
+        for (int i = 0; i < this.numSines; i++) { 
+            // this.sineWaves[i].freq(frequency * (i + 1 + i * detune));
+            // sineWaves[i].amp(sineVolume[i]);
+            // this.sineWaves[i].amp(cos(second()));
+            this.sineWaves[i].freq(frequency * cos(millis()) + 0.5);
         }
 
         this.isComplete = checkIfComplete();

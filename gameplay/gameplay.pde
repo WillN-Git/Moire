@@ -21,10 +21,10 @@ Level[] levels;
 ControlDevice controller;
 
 // SOUND
-SinOsc[] sineWaves;
-int numSines = 2;
-float[] sineVolume;
-float volume = (1.0 / numSines);
+// SinOsc[] sineWaves;
+// int numSines = 2;
+// float[] sineVolume;
+// float volume = (1.0 / numSines);
 // float volume = 0.2;
 
 
