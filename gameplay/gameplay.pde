@@ -8,6 +8,7 @@ Utils utils = new Utils();
 // SOUND LIBRARY
 import processing.sound.*;
 SoundFile rotationClap;
+SoundFile scaleClap;
 
 // GRAPHICS RELATED VARIABLES
 int fpsFontSize = 20;
@@ -47,6 +48,7 @@ void setup() {
 
 
     rotationClap = new SoundFile(this, "rotationClap.wav");
+    scaleClap = new SoundFile(this, "scaleClap.wav");
     /*
     // SOUND SETUP
     sineWaves = new SinOsc[numSines];
@@ -63,7 +65,7 @@ void setup() {
     */
 
     // GAME INSTANCES
-    game = new Game(controller);
+    game = new Game(controller, this);
 }
 
 
