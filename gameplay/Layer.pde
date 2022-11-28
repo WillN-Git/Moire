@@ -7,6 +7,7 @@ class Layer {
     float scale;
     float scaleToBackground; // in percentage of difference
     color strokeColor;
+    int shapeQuantity;
     Params params;
 
     Layer() {
@@ -40,8 +41,8 @@ class Layer {
     }
 
     void computeDistanceToOrigin(float originX, float originY) {
-        this.distanceToOrigin = sqrt(sq(abs(originX - getPositionX())) + sq(abs(originY - getPositionY())));
-    }
+        this.distanceToOrigin = dist(originX, originY, getPositionX(), getPositionY());
+    } 
 
     float getRotation() {
         return rotation;
