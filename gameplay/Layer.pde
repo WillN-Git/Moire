@@ -17,11 +17,11 @@ class Layer {
     int shapeQuantity;
     int shapeSpacing;
     int strokeWeight;
+    float radius;
     Params params;
 
     Layer(Map levelParams) {
         this.levelParams = levelParams;
-        this.params = new Params();
         this.rotation = (180 / (int)levelParams.get("shapeSides"));
         this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
         this.rotationClapPlayed = false;
@@ -33,27 +33,16 @@ class Layer {
         this.shapeQuantity = 100;
         this.shapeSpacing = 20;
         this.strokeWeight = 8;
+        this.radius = width / 40;
+        this.params = new Params();
     }
 
     float getPositionX() {
         return positionX;
     }
 
-    void setPositionX(int input) {
-        this.positionX = input;
-    }
-
     float getPositionY() {
         return positionY;
-    }
-
-    void setPositionY(int input) {
-        this.positionY = input;
-    }
-
-    void setPosition(int x, int y) {
-        this.positionX = x;
-        this.positionY = y;
     }
 
     float getDistanceToOrigin() {
@@ -61,15 +50,11 @@ class Layer {
     }
 
     void computeDistanceToOrigin(float originX, float originY) {
-        this.distanceToOrigin = dist(originX, originY, getPositionX(), getPositionY());
+        this.distanceToOrigin = dist(originX, originY, this.positionX, this.positionY);
     } 
 
     float getRotation() {
         return rotation;
-    }
-
-    void setRotation(float input) {
-        this.rotation = input;
     }
 
     float getRotationToBackground() {
@@ -84,10 +69,6 @@ class Layer {
         return scale;
     }
 
-    void setScale(float input) {
-        this.scale = input;
-    }
-
     float getScaleToBackground() {
         return scaleToBackground;
     }
@@ -96,26 +77,46 @@ class Layer {
         this.scaleToBackground = abs(1 - input / getScale()) * 100;
     }
 
-    color getStrokeColor() {
-        return strokeColor;
-    }
-
     void setStrokeColor(color input) {
         this.strokeColor = input;
     }
 
+    void init(boolean hasColor) {
+        strokeWeight(strokeWeight);
+
+        int[] coordLayer = utils.generateRandomCoord(0, width, 0, height);
+        this.positionX = coordLayer[0];
+        this.positionY = coordLayer[1];
+
+
+        if (hasColor) {
+            this.strokeColor = utils.generateRandomColor();
+        }
+        else {
+            this.strokeColor = color(0, 0, 0);
+        }
+
+        if (this.rotationControlEnabled) {
+            this.rotation = utils.generateRandomRot() % (360 / this.shapeSides);
+        }
+
+        if (this.scaleControlEnabled) {
+            this.scale = utils.generateRandomScale();
+        }
+    }
+
     void updatePosition(ControlDevice controller) {
         if (abs(controller.getSlider("leftJoyX").getValue()) >= params.getJoystickDeadZone()) {
-            setPositionX((int)(getPositionX() + controller.getSlider("leftJoyX").getValue() * params.getLayerTranslationSpeed()));
+            this.positionX = ((int)(this.positionX + controller.getSlider("leftJoyX").getValue() * params.getLayerTranslationSpeed()));
         }
 
         if (abs(controller.getSlider("leftJoyY").getValue()) >= params.getJoystickDeadZone()) {
-            setPositionY((int)(getPositionY() + controller.getSlider("leftJoyY").getValue() * params.getLayerTranslationSpeed()));
+            this.positionY = ((int)(this.positionY + controller.getSlider("leftJoyY").getValue() * params.getLayerTranslationSpeed()));
         }
 
         if (this.scaleControlEnabled) {
             if (abs(controller.getSlider("rightJoyY").getValue()) >= params.getJoystickDeadZone()) {
-                setScale(getScale() - controller.getSlider("rightJoyY").getValue() * params.getLayerScaleSpeed());
+                this.scale = (this.scale - controller.getSlider("rightJoyY").getValue() * params.getLayerScaleSpeed());
             }
 
             if (controller.getButton("triangle").pressed()) {

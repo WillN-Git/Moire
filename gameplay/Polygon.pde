@@ -1,34 +1,7 @@
 class Polygon extends Layer {
-    float radius;
-
 
     Polygon(Map levelParams) {
         super(levelParams);
-        this.radius = width / 40;
-    }
-
-    void init(boolean hasColor) {
-        strokeWeight(strokeWeight);
-
-        int[] coordLayer = utils.generateRandomCoord(0, width, 0, height);
-        this.positionX = coordLayer[0];
-        this.positionY = coordLayer[1];
-
-
-        if (hasColor) {
-            this.strokeColor = utils.generateRandomColor();
-        }
-        else {
-            this.strokeColor = color(0, 0, 0);
-        }
-
-        if (this.rotationControlEnabled) {
-            this.rotation = utils.generateRandomRot() % (360 / this.shapeSides);
-        }
-
-        if (this.scaleControlEnabled) {
-            this.scale = utils.generateRandomScale();
-        }
     }
 
     void draw() {
@@ -44,7 +17,6 @@ class Polygon extends Layer {
 
         popMatrix();
     }
-
 
     void drawPoly(float radius) {
         float angle = TWO_PI / this.shapeSides;
