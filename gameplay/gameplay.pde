@@ -29,7 +29,8 @@ ControlDevice controller;
 
 void setup() {
     // GRAPHICS SETUP
-    size(600, 600);
+    size(800, 800);
+    surface.setTitle("Lost Shapes Dimension");
     // fullScreen();
     noFill();
     textSize(fpsFontSize);
@@ -72,7 +73,7 @@ void draw() {
     
     // FPS COUNTER
     blendMode(BLEND);
-    text((int)frameRate, 0, 20);
+    // text((int)frameRate, 0, 20);
 }
 
 
