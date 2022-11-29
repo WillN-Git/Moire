@@ -121,9 +121,9 @@ class LevelsParams{
         this.level1Params = new HashMap() {{
             put("ID", 1);
             put("layerQuantity", 1);
-            put("shapeSides", 4);
+            put("shapeSides", 7);
             put("hasColor", true);
-            put("rotationControlEnabled", false);
+            put("rotationControlEnabled", true);
             put("scaleControlEnabled", false);
         }};
 
