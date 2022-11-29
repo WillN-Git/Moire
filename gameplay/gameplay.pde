@@ -29,9 +29,9 @@ ControlDevice controller;
 
 void setup() {
     // GRAPHICS SETUP
-    size(800, 800);
+    // size(800, 800);
     surface.setTitle("Lost Shapes Dimension");
-    // fullScreen();
+    fullScreen();
     noFill();
     textSize(fpsFontSize);
 
