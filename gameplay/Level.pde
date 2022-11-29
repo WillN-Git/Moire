@@ -2,7 +2,8 @@ class Level {
     Map levelParams;
     int levelID;
     int layerQuantity;
-    Polygon[] layers;
+    Layer[] layers;
+    int shapeSides;
     boolean hasColor;
     float totalDistanceToOrigin;
     int circleButtonPressedCount;
@@ -12,6 +13,7 @@ class Level {
     boolean hasBeenSetUp;
     boolean isComplete;
     ControlDevice controller;
+    float radiusYMultiplier;
 
     // SOUND LIBRARY
     PApplet parentPApplet; // needed for sound library
@@ -32,7 +34,8 @@ class Level {
         this.levelParams = levelParams;
         this.levelID = (int)levelParams.get("ID");
         this.layerQuantity = (int)levelParams.get("layerQuantity");
-        this.layers = new Polygon[layerQuantity + 1]; // +1 because layers[0] = background
+        this.layers = new Layer[layerQuantity + 1]; // +1 because layers[0] = background
+        this.shapeSides = (int)levelParams.get("shapeSides");
         this.hasColor = (boolean)levelParams.get("hasColor");
         this.circleButtonPressedCount = 0;
         this.layerToControl = 1;
@@ -41,12 +44,32 @@ class Level {
         this.controller = controller;
         this.parentPApplet = parentPApplet;
         this.master = new Sound(this.parentPApplet);
+        initRadiusYMultiplier();
         instanciateLayers();
+    }
+
+    void initRadiusYMultiplier() {
+        this.radiusYMultiplier = random(20);
     }
 
     void instanciateLayers() {
         for (int i = 0; i <= layerQuantity; i++) {
-            this.layers[i] = new Polygon(levelParams);
+            if (this.shapeSides > 0) {
+                // POLYGON
+                this.layers[i] = new Polygon(levelParams);
+            }
+            else if (this.shapeSides == 0) {
+                // ELLIPSE
+                this.layers[i] = new Ellipse(levelParams, radiusYMultiplier);
+            }
+            else if (this.shapeSides == -1) {
+                // CIRCLE
+                this.layers[i] = new Ellipse(levelParams);
+            }
+            else {
+                println("Please input a valid number of sides for your shapes in the LevelsParams.");
+                System.exit(-1);
+            }
         }
     }
 

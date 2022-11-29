@@ -22,7 +22,6 @@ class Layer {
 
     Layer(Map levelParams) {
         this.levelParams = levelParams;
-        this.rotation = (180 / (int)levelParams.get("shapeSides"));
         this.rotationControlEnabled = (boolean)levelParams.get("rotationControlEnabled");
         this.rotationClapPlayed = false;
         this.scale = 1;
@@ -31,10 +30,20 @@ class Layer {
         this.hasColor = (boolean)levelParams.get("hasColor");
         this.shapeSides = (int)levelParams.get("shapeSides");
         this.shapeQuantity = 100;
-        this.shapeSpacing = 20;
+        this.shapeSpacing = 40;
         this.strokeWeight = 8;
         this.radius = width / 40;
         this.params = new Params();
+        initRotation();
+    }
+
+    void initRotation() {
+        if (this.shapeSides > 0) {
+                this.rotation = (180 / this.shapeSides);
+            }
+            else if (this.shapeSides == 0 || this.shapeSides == -1) {
+                this.rotation = 0;
+            }
     }
 
     float getPositionX() {
@@ -97,12 +106,25 @@ class Layer {
         }
 
         if (this.rotationControlEnabled) {
-            this.rotation = utils.generateRandomRot() % (360 / this.shapeSides);
+            if (this.shapeSides > 0) {
+                this.rotation = utils.generateRandomRot() % (360 / this.shapeSides);
+            }
+            else if (this.shapeSides == 0) {
+                this.rotation = utils.generateRandomRot() % 180;
+            }
+            else if (this.shapeSides == -1) {
+                println("Not allowed to activate rotation control when playing with circles.");
+                System.exit(-1);
+            }
         }
 
         if (this.scaleControlEnabled) {
             this.scale = utils.generateRandomScale();
         }
+    }
+
+    void draw() {
+
     }
 
     void updatePosition(ControlDevice controller) {
@@ -141,8 +163,15 @@ class Layer {
                 this.rotation -= 0.05;
             }
 
-            // Nasty formula to map the rotation to only positive value 0 <= x <= (360 / this.shapeSides)
-            this.rotation = ((this.rotation % (360 / this.shapeSides)) + (360 / this.shapeSides)) % (360 / this.shapeSides);
+            if (this.shapeSides > 0) {
+                // Nasty formula to map the rotation to only positive value 0 <= x <= (360 / this.shapeSides)
+                this.rotation = ((this.rotation % (360 / this.shapeSides)) + (360 / this.shapeSides)) % (360 / this.shapeSides);
+            }
+            else if (this.shapeSides == 0) {
+                this.rotation = ((this.rotation % 180) + 180) % 180;
+            }
+
+            
         }
 
         if (controller.getHat("crosspad").left()) {
