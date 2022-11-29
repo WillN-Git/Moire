@@ -29,22 +29,22 @@ Lost Shapes Dimension est un jeu sous acide dans lequel le·a joueur·euse est i
 
 ## Intentions 📑
 
-Les intentions suivent ont été respectées : 
+Les intentions suivantes ont été respectées : 
 
-|  Int N°  | Nom de l'intention                               |   Resultats    |
+|    N°    | Intention                                        |   Resultat     |
 |:---------|:-------------------------------------------------|:---------------|
 |    1     |  Effet visuel de moiré                           |    ACCOMPLI    |
 |    2     |  Feedback sonores lors des interactions          |    ACCOMPLI    |
 |    3     |  Couleurs variées et aléatoires                  |    ACCOMPLI    |
 |    4     |  Application stable et rapide                    |    ACCOMPLI    |
 |    5     |  Jeu à la manette                                |    ACCOMPLI    |
-|    6     |  Génération de niveaux aléatoires                |    ACCOMPLI    |
+|    6     |  Génération de niveaux paramétrique              |    ACCOMPLI    |
 |    7     |  Mix de formes                                   |    ACCOMPLI    |
 
 
 Les intentions suivantes n'ont pas pu être réalisées :
 
-| Issue No. | Nom de l'intention                               | Resultats |  Raisons                |
+|     N°    | Intention                                        | Resultat  |  Raison                 |
 |:----------|:-------------------------------------------------|:----------|:------------------------|
 |     1     |  Mode Multijoueur                                |  ECHEC    | Faute de temps          |
 |     2     |  Jeu à la souris                                 |  ECHEC    | Faute de temps          |
@@ -68,6 +68,10 @@ Aussi après de nombreux bugs rencontrés et tests infructueux nous avons décid
 | Barre de statut            | Une barre de progression du niveau et du jeu pourrait améliorere l'expérience du joueur au regard de son évolution dans le jeu  |
 | Vibration de la manette    | Pour une meilleure immersion dans le jeu et plus de feedback utilisateur |
 | Jeu au clavier             |             |
+| Génération de niveaux aléatoire | Pour un nombre infini de niveaux. Trouver un algorithme pour augmenter le niveau de difficulté. |
+| Modulation du son différente selon les niveaux | Générer une fréquence aléatoirement pour chaque niveau ? |
+| Ecrans inter-niveaux | Pour se reposer les yeux et les oreilles. Déjà en place mais ne fonctionne pas |
+| Ecran d'accueil | Avec mini tuto ? Animation avant le premier niveau ? |
 
 ## Technologies utilisées 👨‍💻
 
