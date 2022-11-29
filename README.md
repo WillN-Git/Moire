@@ -107,5 +107,3 @@ Problèmes rencontrés lors de la réalisation du projet :
 - [Game Control Plus](http://lagers.org.uk/gamecontrol/) : Pour l'interfaçage avec les manettes de jeu (Dualsense / Dualshock, Xbox)
 - [VsCode]() : Notre éditeur de code
 - [Github](https://github.com/WillN-Git/Moire) : Pour la gestion des différentes versions du projet
-
-test
