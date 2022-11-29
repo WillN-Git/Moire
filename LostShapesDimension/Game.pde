@@ -80,4 +80,3 @@ class Game {
         System.exit(-1); // End the program
     }
 }
-
