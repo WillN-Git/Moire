@@ -1,7 +1,6 @@
 <div align="center">
   <h1 align="center">
         Lost Shapes Dimension
-    <img src="MDImages/001-paint.png" />
   </h1>
 
   <h3 align="center">Un puzzle game avec des effet visuels de moire (illusionnistes).</h3>
@@ -9,8 +8,9 @@
 
 <br/>
 
-![screenshot](captures/capture05.png)
-
+<div align="center">
+  <img src="captures/capture05.PNG" />
+</div>
 
 ## Objectif du projet
 Lost Shapes Dimension est un jeu sous acide dans lequel le·a joueur·euse est invité·e à aider des formes géométriques dans leur quête de se recentrer sur elles-mêmes afin de se remettre en phase avec l'univers. 
