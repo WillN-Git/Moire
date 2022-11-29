@@ -1,0 +1,18 @@
+Game controller
+leftJoyX	Left joystick X axis	3	SLIDER	Axe X	0	1.0	0.0
+leftJoyY	Left joystick Y axis	3	SLIDER	Axe Y	0	1.0	0.0
+leftJoyPressed	Left joystick pressed	1	BUTTON	Bouton 10	0	0.0	0.0
+rightJoyX	Right joystick X axis	3	SLIDER	Axe Z	0	1.0	0.0
+rightJoyY	Right joystick Y axis	3	SLIDER	Rotation Z	0	1.0	0.0
+rightJoyPressed	Right joystick pressed	1	BUTTON	Bouton 11	0	0.0	0.0
+square	Square	1	BUTTON	Bouton 0	0	0.0	0.0
+cross	Cross	1	BUTTON	Bouton 1	0	0.0	0.0
+circle	Circle	1	BUTTON	Bouton 2	0	0.0	0.0
+triangle	Triangle	1	BUTTON	Bouton 3	0	0.0	0.0
+l1	L1	1	BUTTON	Bouton 4	0	0.0	0.0
+l2	L2	3	SLIDER	Rotation X	0	1.0	0.0
+r1	R1	1	BUTTON	Bouton 5	0	0.0	0.0
+r2	R2	3	SLIDER	Rotation Y	0	1.0	0.0
+l2Activated	L2 activated	1	BUTTON	Bouton 6	0	0.0	0.0
+r2Activated	R2 activated	1	BUTTON	Bouton 7	0	0.0	0.0
+crosspad	Crosspad	2	HAT	cooliehat: Commande de pouce	0	1.0	0.0
