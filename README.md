@@ -9,7 +9,7 @@
 
 <br/>
 
-![screenshot](MDImages/screenshot.png)
+![screenshot](captures/capture05.png)
 
 
 ## Objectif du projet
