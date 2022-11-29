@@ -30,20 +30,37 @@ class Layer {
         this.hasColor = (boolean)levelParams.get("hasColor");
         this.shapeSides = (int)levelParams.get("shapeSides");
         this.shapeQuantity = 100;
-        this.shapeSpacing = 40;
+        // this.shapeSpacing = 20;
         this.strokeWeight = 8;
-        this.radius = width / 40;
+        this.radius = width / 60;
         this.params = new Params();
         initRotation();
+        initShapeSpacing();
     }
 
     void initRotation() {
         if (this.shapeSides > 0) {
                 this.rotation = (180 / this.shapeSides);
-            }
-            else if (this.shapeSides == 0 || this.shapeSides == -1) {
-                this.rotation = 0;
-            }
+        }
+        else if (this.shapeSides == 0 || this.shapeSides == -1) {
+            this.rotation = 0;
+        }
+    }
+
+    void initShapeSpacing() {
+        switch (this.shapeSides) {
+            case -1:
+                this.shapeSpacing = 30;
+                break;
+            case 0:
+                this.shapeSpacing = 40;
+                break;
+            case 3:
+                this.shapeSpacing = 35;
+                break;
+            default:
+                this.shapeSpacing = 20;
+        }
     }
 
     float getPositionX() {
